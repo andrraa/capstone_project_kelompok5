@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', '', 'threaderz_store');
+$db = mysqli_connect('localhost', 'root', '', 'kelompok5');
 
 
 function getRealIpUser()
@@ -34,14 +34,14 @@ function addCart()
         $qty = $_POST['product_qty'];
         $size = $_POST['size'];
 
-        $check_product = "select * from cart where c_id = '$c_id' AND products_id = '$p_id'";
+        $check_product = "select * from cart where c_id = '$c_id' size = 'size' AND products_id = '$p_id'";
         $run_check = mysqli_query($db, $check_product);
 
 
         if (mysqli_num_rows($run_check) > 0) {
 
             echo "<script>alert('Product already added.')</script>";
-            echo "<script>window.open('product.php?pro_id=$p_id','_self')</script>";
+            echo "<script>window.open('product.php?product_id=$p_id','_self')</script>";
         } else {
 
             $query = "Insert into cart (products_id, ip_add,qty,size,date,c_id) values('$p_id','$ip_add','$qty','$size',NOW(),'$c_id')";
@@ -541,6 +541,7 @@ function cart_items()
                             <tr>
                                 <th>Image</th>
                                 <th class='p-name'>Product Name</th>
+                                <th>Size</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
@@ -553,6 +554,7 @@ function cart_items()
 
         while ($row_items = mysqli_fetch_array($run_itemss)) {
             $p_id = $row_items['products_id'];
+            $size = $row_items['size'];
             $pro_qty = $row_items['qty'];
 
             $get_item = "select * from products where products_id = '$p_id'";
@@ -575,6 +577,7 @@ function cart_items()
            <td class='cart-title first-row'>
                <h5><a href='product.php?product_id=$pro_id' style='color:black;font-weight:bold'>$pro_name</h5>
            </td>
+           <td class='first-row'>$size</td>
            <td class='p-price first-row'>PKR $pro_price</td>
            <td class='qua-col first-row'>
                <div class='quantity'>
