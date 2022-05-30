@@ -148,6 +148,12 @@
                   <p>Pemesanan</p>
                 </a>
               </li>
+              <li class="nav-item ">
+                <a href="pemesanan-detail.php" class="nav-link <?php echo $menuPemesananDetail; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Pemesanan Detail</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="/produk-kategori.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

@@ -65,7 +65,7 @@ include('db.php');
                         <div class="col-sm-0" style="margin-right:1%"></div>
                         <input type="submit" class="btn btn-primary col-sm-2" id="btnCari" value="Cari">
                         <div class="col-sm-0" style="margin-right:1%"></div>
-                        <a class="btn btn-secondary col-sm-2" href="produk-kategori.php">Reset</a>
+                        <a class="btn btn-secondary col-sm-2" href="pemesanan-detail.php">Reset</a>
                         </div>
                       </form>
                     </div>
@@ -92,13 +92,13 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from produk_kategori where judul_produk_kategori like '%$cari%' or deskripsi_produk_kategori like '%$cari%'");
+        $data = mysqli_query($con,"select * from pemesanan_detail where id_pemesanan like '%$cari%' or id_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or harga_produk like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select * from produk_kategori where judul_produk_kategori like '%$cari%' or deskripsi_produk_kategori like '%$cari%' order by id_produk_kategori desc limit $halaman_awal, $batas";
+    $query = "select * from pemesanan_detail where id_pemesanan like '%$cari%' or id_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or harga_produk like '%$cari%' order by id_pemesanan_detail desc limit $halaman_awal, $batas";
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
@@ -109,8 +109,8 @@ include('db.php');
                       <td><?php echo $row['ukuran']; ?></td>
                       <td><?php echo $row['jumlah']; ?></td>
                       <td><?php echo $row['harga_produk']; ?></td>
-                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_produk_kategori"] ?>>Edit</button></td>
-                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_produk_kategori"] ?>>Hapus</button></td>
+                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_pemesanan_detail"] ?>>Edit</button></td>
+                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_pemesanan_detail"] ?>>Hapus</button></td>
                     </tr>
                   <?php
                   }
@@ -191,19 +191,37 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="produk-kategori-c.php">
+                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
                   <input type="hidden" name="simpanPemesananDetail">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul</label>
+                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
                       <div class="col-sm-10">
-                        <input type="text" name="judul" class="form-control" placeholder="Judul"> 
+                        <input type="text" name="id_pemesanan" class="form-control" placeholder="ID Pemesanan"> 
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Deskripsi</label>
+                      <label class="col-sm-2 col-form-label">ID Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" name="deskripsi" class="form-control" placeholder="Deskripsi"> 
+                        <input type="text" name="id_produk" class="form-control" placeholder="ID Produk"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Ukuran</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="ukuran" class="form-control" placeholder="Ukuran"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jumlah</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="jumlah" class="form-control" placeholder="Jumlah"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="harga_produk" class="form-control" placeholder="Harga Produk"> 
                       </div>
                     </div>
                   </div>
@@ -228,20 +246,38 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="produk-kategori-c.php">
+                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
                   <input type="hidden" name="editPemesananDetail" >
-                  <input type="hidden" name="id_produk_kategori" id="eid_produk_kategori">
+                  <input type="hidden" name="id_pemesanan_detail" id="eid_pemesanan_detail">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul</label>
+                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
                       <div class="col-sm-10">
-                        <input type="text" id="ejudul" name="judul" class="form-control" placeholder="Judul">
+                        <input type="text" id="eid_pemesanan" name="id_pemesanan" class="form-control" placeholder="ID Pemesanan"> 
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Deskripsi</label>
+                      <label class="col-sm-2 col-form-label">ID Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="edeskripsi" name="deskripsi" class="form-control" placeholder="Deskripsi">
+                        <input type="text" id="eid_produk" name="id_produk" class="form-control" placeholder="ID Produk"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Ukuran</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="eukuran" name="ukuran" class="form-control" placeholder="Ukuran"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jumlah</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="ejumlah" name="jumlah" class="form-control" placeholder="Jumlah"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="eharga_produk" name="harga_produk" class="form-control" placeholder="Harga Produk"> 
                       </div>
                     </div>
                   </div>
@@ -266,20 +302,38 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="produk-kategori-c.php">
+                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
                   <input type="hidden" name="hapusPemesananDetail" >
-                  <input type="hidden" name="id_produk_kategori" id="hid_produk_kategori">
+                  <input type="hidden" name="id_pemesanan_detail" id="hid_pemesanan_detail">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul</label>
+                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hjudul" name="judul" class="form-control" placeholder="Judul" readonly="">
+                        <input type="text" id="hid_pemesanan" name="id_pemesanan" class="form-control" placeholder="ID  Pemesanan" readonly=""> 
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Deskripsi</label>
+                      <label class="col-sm-2 col-form-label">ID Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hdeskripsi" name="deskripsi" class="form-control" placeholder="Deskripsi" readonly="">
+                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="ID Produk" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Ukuran</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="hukuran" name="ukuran" class="form-control" placeholder="Ukuran" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jumlah</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="hjumlah" name="jumlah" class="form-control" placeholder="Jumlah" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="hharga_produk" name="harga_produk" class="form-control" placeholder="Harga Produk" readonly=""> 
                       </div>
                     </div>
                   </div>
@@ -328,19 +382,21 @@ include('db.php');
     
   $('body').on('click', '.btnEdit', function () {
 
-    var id_produk_kategori = $(this).data("id");
+    var id_pemesanan_detail = $(this).data("id");
     $.ajax({
         data: {
-          'id_produk_kategori': id_produk_kategori,
+          'id_pemesanan_detail': id_pemesanan_detail,
         },
-        url: "produk-kategori-c.php",
+        url: "pemesanan-detail-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#eid_produk_kategori').val(myObj.id_produk_kategori);
-              $('#ejudul').val(myObj.judul_produk_kategori);
-              $('#edeskripsi').val(myObj.deskripsi_produk_kategori);
-
+              $('#eid_pemesanan_detail').val(myObj.id_pemesanan_detail);
+              $('#eid_pemesanan').val(myObj.id_pemesanan);
+              $('#eid_produk').val(myObj.id_produk);
+              $('#eukuran').val(myObj.ukuran);
+              $('#ejumlah').val(myObj.jumlah);
+              $('#eharga_produk').val(myObj.harga_produk);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -351,18 +407,21 @@ include('db.php');
 
   $('body').on('click', '.btnHapus', function () {
 
-    var id_produk_kategori = $(this).data("id");
+    var id_pemesanan_detail = $(this).data("id");
     $.ajax({
         data: {
-          'id_produk_kategori': id_produk_kategori,
+          'id_pemesanan_detail': id_pemesanan_detail,
         },
-        url: "produk-kategori-c.php",
+        url: "pemesanan-detail-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#hid_produk_kategori').val(myObj.id_produk_kategori);
-              $('#hjudul').val(myObj.judul_produk_kategori);
-              $('#hdeskripsi').val(myObj.deskripsi_produk_kategori);
+              $('#hid_pemesanan_detail').val(myObj.id_pemesanan_detail);
+              $('#hid_pemesanan').val(myObj.id_pemesanan);
+              $('#hid_produk').val(myObj.id_produk);
+              $('#hukuran').val(myObj.ukuran);
+              $('#hjumlah').val(myObj.jumlah);
+              $('#hharga_produk').val(myObj.harga_produk);
 
             },
             error: function (data) {
