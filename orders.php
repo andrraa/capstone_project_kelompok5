@@ -17,8 +17,6 @@ if (isset($_SESSION['customer_email'])) {
     $get_items = "select * from orders where c_id = '$custom_id' ORDER BY date DESC";
     $run_items = mysqli_query($db, $get_items);
 
-
-
     echo "
     <div class='cart-table' style='min-height: 150px;'>
     <table>
@@ -30,10 +28,7 @@ if (isset($_SESSION['customer_email'])) {
                 <th>Date</th>
             </tr>
         </thead>
-
         <tbody>
-
-    
     ";
 
     while ($row_items = mysqli_fetch_array($run_items)) {
@@ -57,14 +52,8 @@ if (isset($_SESSION['customer_email'])) {
     }
 }
 
-
-
 ?>
 
-
-
 </tbody>
-
 </table>
-
 </div>

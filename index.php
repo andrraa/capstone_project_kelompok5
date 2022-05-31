@@ -1,5 +1,7 @@
 <?php
+
 $active = "Home";
+
 include("functions.php");
 include("header.php");
 
@@ -39,7 +41,6 @@ include("header.php");
             </div>
                 ";
         }
-
 
         $get_slides = "select * from slider LIMIT 1,2";
         $run_slider = mysqli_query($con, $get_slides);
@@ -111,7 +112,6 @@ include("header.php");
     </div>
 </div>
 
-
 <!-- Women Banner Section Begin -->
 
 <section class="women-banner spad">
@@ -137,7 +137,6 @@ include("header.php");
         </div>
     </div>
 </section>
-
 
 <!-- Man Banner Section Begin -->
 
@@ -169,7 +168,6 @@ include("header.php");
 
 <?php
 include('footer.php');
-
 
 if (isset($_GET['stat'])) {
 

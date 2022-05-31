@@ -1,10 +1,12 @@
 <?php
+
 $active = "Checkout";
+
 include('db.php');
 include("functions.php");
 include("header.php");
-?>
 
+?>
 
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -49,7 +51,6 @@ include("header.php");
                                     <a href="check-out.php?place=1" class="site-btn place-btn">Place Order</a>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -58,18 +59,17 @@ include("header.php");
 </section>
 <!-- Shopping Cart Section End -->
 
-
 <?php
+
 include('footer.php');
+
 ?>
 
 </body>
 
 </html>
 
-
 <?php
-
 
 if (isset($_GET['place'])) {
 
@@ -115,14 +115,14 @@ if (isset($_GET['place'])) {
 
     $run_clear = mysqli_query($con, $cart_clear);
 
-    echo "<script>alert('Order Placed. Thankyou for Shopping')</script>";
+    echo "
+        <script>
+                bootbox.alert({
+                    message: 'Order Placed. Thankyou for Shopping',
+                    backdrop: true
+                });
+        </script>";
     echo "<script>window.open('account.php?orders','_self')</script>";
 }
-
-
-
-
-
-
 
 ?>

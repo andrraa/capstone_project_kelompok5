@@ -1,8 +1,9 @@
 <?php
+
 require_once('config.php');
 include('db.php');
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,6 @@ include('db.php');
 <link rel='stylesheet' href='css/owl.carousel.min.css' type='text/css'>
 <link rel='stylesheet' href='css/slicknav.min.css' type='text/css'>
 <link rel='stylesheet' href='css/style.css' type='text/css'>
-
 
 </head>
 
@@ -125,7 +125,6 @@ include('db.php');
                                     <div class="select-items">
                                         <table>
                                             <tbody>
-
                                                 <?php cart_icon_prod(); ?>
                                             </tbody>
                                         </table>
@@ -147,9 +146,7 @@ include('db.php');
             </div>
         </div>
 
-
         <!-- Lower Bar -->
-
 
         <div class="nav-item">
             <div class="container">
@@ -158,11 +155,11 @@ include('db.php');
                         <i class="ti-menu"></i>
                         <span>All Categories</span>
                         <ul class="depart-hover">
-
                             <?php
-                            getProdCat();
-                            ?>
 
+                            getProdCat();
+
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -170,7 +167,8 @@ include('db.php');
                     <ul>
                         <li class="<?php if ($active == 'Home') echo "active" ?>"><a href="index.php">Home</a></li>
                         <li class="<?php if ($active == 'Shop') echo "active" ?>"><a href="shop.php">Shop</a></li>
-                        <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact.php">Contact</a></li>
+                        <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact.php">Contact</a>
+                        </li>
 
                     </ul>
                 </nav>
@@ -180,8 +178,8 @@ include('db.php');
     </header>
     <!-- Header End -->
 
-
     <?php
+
     if (isset($_GET['delcart'])) {
 
 
@@ -194,7 +192,6 @@ include('db.php');
 
         echo "<script>window.open('index.php','_self')</script>";
     }
-
 
     if (isset($_POST['submit'])) {
 
@@ -212,8 +209,6 @@ include('db.php');
 
             $products_id = $row_product['products_id'];
 
-
-
             echo "<script>window.open('product.php?product_id=$products_id','_self')</script>";
         } else {
 
@@ -227,4 +222,5 @@ include('db.php');
 
         }
     }
+
     ?>

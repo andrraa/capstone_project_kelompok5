@@ -1,4 +1,5 @@
 <?php
+
 $active = "Details";
 
 if (isset($_GET['details'])) {

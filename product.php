@@ -1,8 +1,11 @@
 <?php
+
 $active = "Product";
+
 include("db.php");
 include("functions.php");
 include('header.php');
+
 ?>
 <div style="overflow: hidden;">
     <!-- Breadcrumb Section Begin -->
@@ -30,9 +33,7 @@ include('header.php');
                         <h4 class="fw-title">Categories</h4>
                         <ul class="filter-catagories">
                             <?php
-
                             getCat();
-
                             ?>
                         </ul>
                     </div>
@@ -40,19 +41,13 @@ include('header.php');
                 <div class="col-lg-9">
                     <div class="row">
                         <?php
-
                         getProd();
                         addCart();
-
                         ?>
-
-
-
                         <form action='product.php?add_cart=<?php if (isset($_GET['product_id'])) {
                                                                 $product_id = $_GET['product_id'];
                                                                 echo $product_id;
                                                             } ?>' method='post'>
-
                             <div class="form-group">
                                 <!-- form-group Begin -->
                                 <div class='quantity'>
@@ -61,16 +56,17 @@ include('header.php');
                                     </div>
                                 </div>
                             </div><!-- form-group Finish -->
-
                             <div class="form-group">
                                 <!-- form-group Begin -->
                                 <div class='pd-size-choose'>
                                     <div class='sc-item'>
-                                        <input type='radio' id='sm-size' class="form-control" name='size' value="Small" required novalidate>
+                                        <input type='radio' id='sm-size' class="form-control" name='size' value="Small"
+                                            required novalidate>
                                         <label for='sm-size'>s</label>
                                     </div>
                                     <div class='sc-item'>
-                                        <input type='radio' id='md-size' class="form-control" name='size' value="Medium">
+                                        <input type='radio' id='md-size' class="form-control" name='size'
+                                            value="Medium">
                                         <label for='md-size'>m</label>
                                     </div>
                                     <div class='sc-item'>
@@ -91,16 +87,12 @@ include('header.php');
                             }
                             ?>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
 </div>
-
 </section>
-
-
 <div class="related-products spad">
     <div class="container">
         <div class="row">
@@ -110,38 +102,37 @@ include('header.php');
                 </div>
             </div>
         </div>
-
         <div class="row">
-
             <?php
 
             relatedProducts();
-            ?>
 
+            ?>
         </div>
     </div>
 </div>
 </div>
 
 <?php
+
 include('footer.php');
+
 ?>
 
 <script>
-    $("#cartbtn").on('click', function() {
-        var atLeastOneChecked = false;
-        if (!$("input[name='size']").is(':checked')) {
+$("#cartbtn").on('click', function() {
+    var atLeastOneChecked = false;
+    if (!$("input[name='size']").is(':checked')) {
 
-            $("#msg").html(
-                "<span class='alert alert-danger'>" +
-                "Please Choose Size </span>");
-        } else {
-            return;
-        }
+        $("#msg").html(
+            "<span class='alert alert-danger'>" +
+            "Please Choose Size </span>");
+    } else {
+        return;
+    }
 
-    });
+});
 </script>
-
 </body>
 
 </html>

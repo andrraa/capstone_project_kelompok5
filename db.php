@@ -1,3 +1,5 @@
 <?php
-$con = mysqli_connect("localhost","root", "", "threaderz_store");
+
+$con = mysqli_connect("localhost","root", "", "db_kelompok5");
+
 ?>

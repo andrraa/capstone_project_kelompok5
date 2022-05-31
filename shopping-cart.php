@@ -1,8 +1,11 @@
 <?php
+
 $active = "Shopping Cart";
+
 include("db.php");
 include("functions.php");
 include('header.php');
+
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -31,18 +34,14 @@ include('header.php');
                         <tbody>
                             <?php cart_items(); ?>
                         </tbody>
-
                     </table>
-
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-
                             <a href="shop.php" class="primary-btn continue-shop">Continue shopping</a>
                             <a href="shopping-cart.php?upd=" class="primary-btn up-cart">Update cart</a>
                         </div>
-
                     </div>
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
@@ -61,22 +60,20 @@ include('header.php');
 <!-- Shopping Cart Section End -->
 
 <?php
-include('footer.php');
-?>
 
+include('footer.php');
+
+?>
 
 </body>
 
 </html>
 
-
 <?php
 
 if (isset($_GET['del'])) {
 
-
     $p_id = $_GET['del'];
-
 
     $query = "Delete from cart where products_id='$p_id'";
 
@@ -87,9 +84,7 @@ if (isset($_GET['del'])) {
 
 if (isset($_GET['upd'])) {
 
-
     $p_id = $_GET['del'];
-
 
     $query = "Delete from cart where products_id='$p_id'";
 
@@ -97,6 +92,5 @@ if (isset($_GET['upd'])) {
 
     echo "<script>window.open('shopping-cart.php','_self')</script>";
 }
-
 
 ?>

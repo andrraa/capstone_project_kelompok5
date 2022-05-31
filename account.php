@@ -29,12 +29,8 @@ include("header.php");
             include("sidebar.php");
 
             ?>
-
         </div>
-
         <div class="col-md-8 col-10" style="padding:20px 0">
-
-
             <?php
 
             if (isset($_GET['orders'])) {
@@ -48,20 +44,16 @@ include("header.php");
             
                 include("details.php");
             }
+
             ?>
-
-
         </div>
     </div>
 </div>
 
-
-
-
-
-
 <?php
+
 include('footer.php');
+
 ?>
 
 </body>

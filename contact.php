@@ -1,11 +1,12 @@
 <?php
+
 $active = "Contact";
+
 include('db.php');
 include("functions.php");
 include("header.php");
 
 ?>
-
 
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -70,13 +71,16 @@ include("header.php");
                         <form action="contact.php" class="comment-form">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="Your name" class="form-control" name="name" required>
+                                    <input type="text" placeholder="Your name" class="form-control" name="name"
+                                        required>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="Your email" class="form-control" name="email" required>
+                                    <input type="text" placeholder="Your email" class="form-control" name="email"
+                                        required>
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="text" placeholder="Message Subject" class="form-control" name="subject" required>
+                                    <input type="text" placeholder="Message Subject" class="form-control" name="subject"
+                                        required>
                                 </div>
                                 <div class="col-lg-12">
                                     <textarea placeholder="Your message" class="form-control" name="message"></textarea>
@@ -108,9 +112,10 @@ include("header.php");
 <!-- Contact Section End -->
 
 <?php
-include('footer.php');
-?>
 
+include('footer.php');
+
+?>
 
 </body>
 
