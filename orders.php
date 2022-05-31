@@ -24,7 +24,7 @@ if (isset($_SESSION['customer_email'])) {
             <tr>
                 <th>Order ID</th>
                 <th>Price</th>
-                <th> Quantity</th>
+                <th>Quantity</th>
                 <th>Date</th>
             </tr>
         </thead>

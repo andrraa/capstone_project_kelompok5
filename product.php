@@ -60,22 +60,21 @@ include('header.php');
                                 <!-- form-group Begin -->
                                 <div class='pd-size-choose'>
                                     <div class='sc-item'>
-                                        <input type='radio' id='sm-size' class="form-control" name='size' value="Small"
+                                        <input type='radio' id='sm-size' class="form-control" name='size' value="S"
                                             required novalidate>
-                                        <label for='sm-size'>s</label>
+                                        <label for='sm-size'>S</label>
                                     </div>
                                     <div class='sc-item'>
-                                        <input type='radio' id='md-size' class="form-control" name='size'
-                                            value="Medium">
-                                        <label for='md-size'>m</label>
+                                        <input type='radio' id='md-size' class="form-control" name='size' value="M">
+                                        <label for='md-size'>M</label>
                                     </div>
                                     <div class='sc-item'>
-                                        <input type='radio' id='lg-size' class="form-control" name='size' value="Large">
-                                        <label for='lg-size'>l</label>
+                                        <input type='radio' id='lg-size' class="form-control" name='size' value="L">
+                                        <label for='lg-size'>L</label>
                                     </div>
                                     <div class='sc-item'>
                                         <input type='radio' id='xl-size' class="form-control" name='size' value="XL">
-                                        <label for='xl-size'>xl</label>
+                                        <label for='xl-size'>XL</label>
                                     </div>
                                 </div>
                                 <p id="msg"></p>

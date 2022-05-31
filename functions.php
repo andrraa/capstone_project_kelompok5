@@ -497,6 +497,7 @@ function cart_items()
                                 <th class='p-name'>Product Name</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Size</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -507,7 +508,8 @@ function cart_items()
         while ($row_items = mysqli_fetch_array($run_itemss)) {
             $p_id = $row_items['products_id'];
             $pro_qty = $row_items['qty'];
-
+            $pro_size = $row_items['size'];
+            
             $get_item = "select * from products where products_id = '$p_id'";
             $run_item = mysqli_query($db, $get_item);
 
@@ -536,6 +538,7 @@ function cart_items()
                    </div>
                </div>
            </td>
+           <td class='size first-row'>$pro_size</td>
            <td class='total-price first-row'>PKR $pro_total_p</td>
            <td class='close-td first-row'><a href='shopping-cart.php?del=$pro_id'><i class='ti-close' style='color:black'></i></a></td>
        </tr>    
