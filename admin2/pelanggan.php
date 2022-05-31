@@ -85,6 +85,7 @@ include('db.php');
                     </thead>
                     <tbody>
                       <?php
+                      $jenis_kelamins = array('Laki-laki','Perempuan');
         $batas = 5;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  
@@ -234,8 +235,13 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                       <div class="col-sm-10">
-                        <input type="text" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin"> 
-                        <span class="text-danger">salah tulis</span>
+                        <select class="form-control select2bs4" style="width: 100%;" name="jenis_kelamin">
+                          <?php foreach($jenis_kelamins as $jenis_kelamin){
+                            echo "<option>$jenis_kelamin</option>";
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -308,7 +314,13 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                       <div class="col-sm-10">
-                        <input type="text" id="ejenis_kelamin" name="jenis_kelamin" class="form-control" placeholder="Jenis Kelamin"> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="ejenis_kelamin" name="jenis_kelamin">
+                          <?php foreach($jenis_kelamins as $jenis_kelamin){
+                            echo "<option>$jenis_kelamin</option>";
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -418,6 +430,13 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
 
@@ -436,7 +455,17 @@ include('db.php');
               $('#eemail').val(myObj.email_pelanggan);
               $('#epassword').val(myObj.password_pelanggan);
               $('#ealamat').val(myObj.alamat_pelanggan);
-              $('#ejenis_kelamin').val(myObj.jenis_kelamin_pelanggan);
+              var jk = <?php echo json_encode($jenis_kelamins); ?>;
+              let txt = "";
+              jk.forEach(jkfungsi);
+              function jkfungsi(value) {
+                if(value==myObj.jenis_kelamin_admin)
+                  txt +=  "<option selected>"+value+"</option>";
+                else
+                  txt +=  "<option>"+value+"</option>";
+              }
+
+              $('#ejenis_kelamin').html(txt);
 
             },
             error: function (data) {

@@ -41,6 +41,17 @@ else if(isset($_GET['id_pemesanan'])){
   while ($row = mysqli_fetch_array($rows)) {
     $haha=$row;
   }
+
+  $tpelanggan=array();
+
+  $query = "select * from pelanggan order by id_pelanggan desc";
+  $rows = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($rows)) {
+    array_push($tpelanggan, $row);
+  }
+
+  $haha['tpelanggan']=$tpelanggan;
+
   echo json_encode($haha);
 }
 

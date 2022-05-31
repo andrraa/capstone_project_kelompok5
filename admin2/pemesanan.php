@@ -74,7 +74,7 @@ include('db.php');
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>ID Pelanggan</th>
+                      <th>Nama Pelanggan</th>
                       <th>Alamat Pengiriman</th>
                       <th>Jenis Pengiriman</th>
                       <th>Status</th>
@@ -92,19 +92,19 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from pemesanan where id_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%'");
+        $data = mysqli_query($con,"select * from pemesanan join pelanggan on pemesanan.id_pelanggan=pelanggan.id_pelanggan where nama_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select * from pemesanan where id_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%' order by id_pemesanan desc limit $halaman_awal, $batas";
+    $query = "select * from pemesanan join pelanggan on pemesanan.id_pelanggan=pelanggan.id_pelanggan where nama_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%' order by id_pemesanan desc limit $halaman_awal, $batas";
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['id_pelanggan']; ?></td>
+                      <td><?php echo $row['nama_pelanggan']; ?></td>
                       <td><?php echo $row['alamat_pengiriman']; ?></td>
                       <td><?php echo $row['jenis_pengiriman']; ?></td>
                       <td><?php echo $row['status']; ?></td>
@@ -195,9 +195,20 @@ include('db.php');
                   <input type="hidden" name="simpanPemesanan">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Pelanggan</label>
+                      <label class="col-sm-2 col-form-label">Nama Pelanggan</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_pelanggan" class="form-control" placeholder="ID Pelanggan"> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_pelanggan">
+                          <?php 
+                          $query = "select * from pelanggan order by id_pelanggan desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_pelanggan"]?>"><?php echo $row['nama_pelanggan'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -251,9 +262,10 @@ include('db.php');
                   <input type="hidden" name="id_pemesanan" id="eid_pemesanan">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Pelanggan</label>
+                      <label class="col-sm-2 col-form-label">Nama Pelanggan</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_pelanggan" name="id_pelanggan" class="form-control" placeholder="ID Pelanggan"> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_pelanggan" name="id_pelanggan">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -379,8 +391,22 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
+
+    bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
 
     var id_pemesanan = $(this).data("id");
     $.ajax({
@@ -392,11 +418,21 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#eid_pemesanan').val(myObj.id_pemesanan);
-              $('#eid_pelanggan').val(myObj.id_pelanggan);
               $('#ealamat_pengiriman').val(myObj.alamat_pengiriman);
               $('#ejenis_pengiriman').val(myObj.jenis_pengiriman);
               $('#estatus').val(myObj.status);
               $('#etanggal').val(myObj.tanggal);
+
+              var tpelanggan = myObj['tpelanggan'];
+              let txtp ="";
+              tpelanggan.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_pelanggan"]==myObj.id_pelanggan)
+                  txtp +=  "<option value="+value['id_pelanggan']+" selected>"+value['nama_pelanggan']+"</option>";
+                else
+                  txtp +=  "<option value="+value['id_pelanggan']+">"+value['nama_pelanggan']+"</option>";
+              }
+              $('#eid_pelanggan').html(txtp);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -417,11 +453,17 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#hid_pemesanan').val(myObj.id_pemesanan);
-              $('#hid_pelanggan').val(myObj.id_pelanggan);
               $('#halamat_pengiriman').val(myObj.alamat_pengiriman);
               $('#hjenis_pengiriman').val(myObj.jenis_pengiriman);
               $('#hstatus').val(myObj.status);
               $('#htanggal').val(myObj.tanggal);
+
+              var tpelanggan = myObj['tpelanggan'];
+              tpelanggan.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_pelanggan"]==myObj.id_pelanggan)
+                $('#hid_pelanggan').val(value['nama_pelanggan']);
+              }
 
             },
             error: function (data) {

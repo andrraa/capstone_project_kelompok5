@@ -77,7 +77,7 @@ include('db.php');
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama</th>
+                      <th>Judul Produk</th>
                       <th>Gambar</th>
                       <th>Edit</th>
                       <th>Hapus</th>
@@ -92,25 +92,19 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from gambar_produk where id_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
-        if(isset($_GET['cari'])){
-          $cari = $_GET['cari'];
-          $query = "select * from gambar_produk where id_produk like '%$cari%' order by id_gambar_produk desc limit $halaman_awal, $batas";
-        }
-        else{
-          $query = "select * from gambar_produk order by id_gambar_produk desc limit $halaman_awal, $batas";
-        }
+        $query = "select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%' order by id_gambar_produk desc limit $halaman_awal, $batas";
         
         $rows = mysqli_query($con, $query);
         while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['id_produk']; ?></td>
+                      <td><?php echo $row['judul_produk']; ?></td>
                       
                       <td style="text-align: center;"><img src="image/gambar_produk/<?php echo $row['gambar_produk']; ?>" style="height:100px;max-width:600px"></td>
                       <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_gambar_produk"] ?>>Edit</button></td>
@@ -201,7 +195,18 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_produk" class="form-control" placeholder="Judul Produk" required> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_produk">
+                          <?php 
+                          $query = "select * from produk order by id_produk desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_produk"]?>"><?php echo $row['judul_produk'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -242,7 +247,8 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_produk" name="id_produk" class="form-control" placeholder="Judul Produk" required> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_produk" name="id_produk">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -345,6 +351,13 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
 
@@ -358,8 +371,18 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#eid_gambar_produk').val(myObj.id_gambar_produk);
-              $('#eid_produk').val(myObj.id_produk);
               $('#esigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
+
+              var tproduk = myObj['tproduk'];
+              let txtk ="";
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                  txtk +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
+                else
+                  txtk +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
+              }
+              $('#eid_produk').html(txtk);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -383,8 +406,15 @@ include('db.php');
               $('#hid_produk').val(myObj.id_produk);
               $('#hsigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
 
+              var tproduk = myObj['tproduk'];
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                $('#hid_produk').val(value['judul_produk']);
+              }
+              
             },
-            error: function (data) {
+            error: function (data) {r
                 console.log('Error:', data);
             }
         });

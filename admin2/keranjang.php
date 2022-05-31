@@ -92,19 +92,19 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from keranjang where id_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%'");
+        $data = mysqli_query($con,"select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select * from keranjang where id_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%' order by id_keranjang desc limit $halaman_awal, $batas";
+    $query = "select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%' order by id_keranjang desc limit $halaman_awal, $batas";
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['id_produk']; ?></td>
+                      <td><?php echo $row['judul_produk']; ?></td>
                       <td><?php echo $row['email_pelanggan']; ?></td>
                       <td><?php echo $row['ukuran']; ?></td>
                       <td><?php echo $row['jumlah']; ?></td>
@@ -197,7 +197,18 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_produk" class="form-control" placeholder="Judul Produk"> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_produk">
+                          <?php 
+                          $query = "select * from produk order by id_produk desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_produk"]?>"><?php echo $row['judul_produk'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -253,7 +264,8 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_produk" name="id_produk" class="form-control" placeholder="Judul Produk">
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_produk" name="id_produk">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -379,6 +391,13 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
 
@@ -392,11 +411,21 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#eid_keranjang').val(myObj.id_keranjang);
-              $('#eid_produk').val(myObj.id_produk);
               $('#eemail_pelanggan').val(myObj.email_pelanggan);
               $('#eukuran').val(myObj.ukuran);
               $('#ejumlah').val(myObj.jumlah);
               $('#etanggal').val(myObj.tanggal);
+
+              var tproduk = myObj['tproduk'];
+              let txtp ="";
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                  txtp +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
+                else
+                  txtp +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
+              }
+              $('#eid_produk').html(txtp);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -417,11 +446,19 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#hid_keranjang').val(myObj.id_keranjang);
-              $('#hid_produk').val(myObj.id_produk);
               $('#hemail_pelanggan').val(myObj.email_pelanggan);
               $('#hukuran').val(myObj.ukuran);
               $('#hjumlah').val(myObj.jumlah);
               $('#htanggal').val(myObj.tanggal);
+
+              alert(myObj.id_produk);
+
+              var tpelanggan = myObj['tproduk'];
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                $('#hid_produk').val(value['judul_produk']);
+              }
 
             },
             error: function (data) {

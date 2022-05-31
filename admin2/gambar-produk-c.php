@@ -88,5 +88,16 @@ else if(isset($_GET['id_gambar_produk'])){
   while ($row = mysqli_fetch_array($rows)) {
     $haha=$row;
   }
+
+  $tproduk=array();
+
+  $query = "select * from produk order by id_produk desc";
+  $rows = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($rows)) {
+    array_push($tproduk, $row);
+  }
+
+  $haha['tproduk']=$tproduk;
+
   echo json_encode($haha);
 }

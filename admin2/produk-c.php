@@ -43,6 +43,25 @@ else if(isset($_GET['id_produk'])){
   while ($row = mysqli_fetch_array($rows)) {
     $haha=$row;
   }
+  $tkategori=array();
+
+
+  $query = "select * from kategori order by id_kategori desc";
+  $rows = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($rows)) {
+    array_push($tkategori, $row);
+  }
+
+  $tproduk_kategori=array();
+
+  $query = "select * from produk_kategori order by id_produk_kategori desc";
+  $rows = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_array($rows)) {
+    array_push($tproduk_kategori, $row);
+  }
+
+  $haha['tkategori']=$tkategori;
+  $haha['tproduk_kategori']=$tproduk_kategori;
   echo json_encode($haha);
 }
 

@@ -75,7 +75,7 @@ include('db.php');
                     <tr>
                       <th>No</th>
                       <th>ID Pemesanan</th>
-                      <th>ID Produk</th>
+                      <th>Judul Produk</th>
                       <th>Ukuran</th>
                       <th>Jumlah</th>
                       <th>Harga Produk</th>
@@ -92,23 +92,23 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from pemesanan_detail where id_pemesanan like '%$cari%' or id_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or harga_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from pemesanan_detail join produk on pemesanan_detail.id_produk=produk.id_produk where id_pemesanan like '%$cari%' or judul_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or pemesanan_detail.harga_produk like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select * from pemesanan_detail where id_pemesanan like '%$cari%' or id_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or harga_produk like '%$cari%' order by id_pemesanan_detail desc limit $halaman_awal, $batas";
+    $query = "select *, pemesanan_detail.harga_produk as pdharga_produk from pemesanan_detail join produk on pemesanan_detail.id_produk=produk.id_produk where id_pemesanan like '%$cari%' or judul_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or pemesanan_detail.harga_produk like '%$cari%' order by id_pemesanan_detail desc limit $halaman_awal, $batas";
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
                       <td><?php echo $row['id_pemesanan']; ?></td>
-                      <td><?php echo $row['id_produk']; ?></td>
+                      <td><?php echo $row['judul_produk']; ?></td>
                       <td><?php echo $row['ukuran']; ?></td>
                       <td><?php echo $row['jumlah']; ?></td>
-                      <td><?php echo $row['harga_produk']; ?></td>
+                      <td><?php echo $row['pdharga_produk']; ?></td>
                       <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_pemesanan_detail"] ?>>Edit</button></td>
                       <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_pemesanan_detail"] ?>>Hapus</button></td>
                     </tr>
@@ -201,9 +201,20 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Produk</label>
+                      <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_produk" class="form-control" placeholder="ID Produk"> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_produk">
+                          <?php 
+                          $query = "select * from produk order by id_produk desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_produk"]?>"><?php echo $row['judul_produk'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -257,9 +268,10 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Produk</label>
+                      <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_produk" name="id_produk" class="form-control" placeholder="ID Produk"> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_produk" name="id_produk">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -379,6 +391,13 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
 
@@ -393,10 +412,20 @@ include('db.php');
               myObj = JSON.parse(data);
               $('#eid_pemesanan_detail').val(myObj.id_pemesanan_detail);
               $('#eid_pemesanan').val(myObj.id_pemesanan);
-              $('#eid_produk').val(myObj.id_produk);
               $('#eukuran').val(myObj.ukuran);
               $('#ejumlah').val(myObj.jumlah);
               $('#eharga_produk').val(myObj.harga_produk);
+
+              var tproduk = myObj['tproduk'];
+              let txtp ="";
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                  txtp +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
+                else
+                  txtp +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
+              }
+              $('#eid_produk').html(txtp);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -418,10 +447,16 @@ include('db.php');
               myObj = JSON.parse(data);
               $('#hid_pemesanan_detail').val(myObj.id_pemesanan_detail);
               $('#hid_pemesanan').val(myObj.id_pemesanan);
-              $('#hid_produk').val(myObj.id_produk);
               $('#hukuran').val(myObj.ukuran);
               $('#hjumlah').val(myObj.jumlah);
               $('#hharga_produk').val(myObj.harga_produk);
+
+              var tpelanggan = myObj['tproduk'];
+              tproduk.forEach(tpfungsi);
+              function tpfungsi(value) {
+                if(value["id_produk"]==myObj.id_produk)
+                $('#hid_produk').val(value['judul_produk']);
+              }
 
             },
             error: function (data) {

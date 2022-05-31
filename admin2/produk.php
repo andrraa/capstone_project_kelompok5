@@ -93,20 +93,22 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from produk where id_produk_kategori like '%$cari%' or id_kategori like '%$cari%' or judul_produk like '%$cari%' or harga_produk like '%$cari%' or keyword_produk like '%$cari%' or deskripsi_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from produk join kategori on produk.id_kategori=kategori.id_kategori join produk_kategori on produk.id_produk_kategori=produk_kategori.id_produk_kategori where judul_produk_kategori like '%$cari%' or judul_kategori like '%$cari%' or judul_produk like '%$cari%' or harga_produk like '%$cari%' or keyword_produk like '%$cari%' or deskripsi_produk like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select * from produk where id_produk_kategori like '%$cari%' or id_kategori like '%$cari%' or judul_produk like '%$cari%' or harga_produk like '%$cari%' or keyword_produk like '%$cari%' or deskripsi_produk like '%$cari%' order by id_produk desc limit $halaman_awal, $batas";
+    $query = "select * from produk join kategori on produk.id_kategori=kategori.id_kategori join produk_kategori on produk.id_produk_kategori=produk_kategori.id_produk_kategori where judul_produk_kategori like '%$cari%' or judul_kategori like '%$cari%' or judul_produk like '%$cari%' or harga_produk like '%$cari%' or keyword_produk like '%$cari%' or deskripsi_produk like '%$cari%' order by id_produk desc limit $halaman_awal, $batas";
+
+
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['id_produk_kategori']; ?></td>
-                      <td><?php echo $row['id_kategori']; ?></td>
+                      <td><?php echo $row['judul_produk_kategori']; ?></td>
+                      <td><?php echo $row['judul_kategori']; ?></td>
                       <td><?php echo $row['judul_produk']; ?></td>
                       <td><?php echo $row['harga_produk']; ?></td>
                       <td><?php echo $row['keyword_produk']; ?></td>
@@ -199,13 +201,35 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Produk Kategori</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_produk_kategori" class="form-control" placeholder="Produk Kategori">
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_produk_kategori">
+                          <?php 
+                          $query = "select * from produk_kategori order by id_produk_kategori desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_produk_kategori"]?>"><?php echo $row['judul_produk_kategori'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Kategori</label>
                       <div class="col-sm-10">
-                        <input type="text" name="id_kategori" class="form-control" placeholder="Kategori"> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_kategori">
+                          <?php 
+                          $query = "select * from kategori order by id_kategori desc";
+                            $rows = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_array($rows)) {
+                              ?>
+                            <option value="<?php echo $row["id_kategori"]?>"><?php echo $row['judul_kategori'] ?></option>
+                            <?php
+                          }
+                          ?>
+                          
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -261,13 +285,15 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Produk Kategori</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_produk_kategori" name="id_produk_kategori" class="form-control" placeholder="Produk Kategori">
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_produk_kategori" name="id_produk_kategori">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Kategori</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eid_kategori" name="id_kategori" class="form-control" placeholder="Kategori"> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_kategori" name="id_kategori">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -398,6 +424,12 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+  bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
     
   $('body').on('click', '.btnEdit', function () {
 
@@ -411,13 +443,32 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#eid_produk').val(myObj.id_produk);
-              $('#eid_produk_kategori').val(myObj.id_produk_kategori);
-              $('#eid_kategori').val(myObj.id_kategori);
               $('#ejudul_produk').val(myObj.judul_produk);
               $('#eharga_produk').val(myObj.harga_produk);
               $('#ekeyword_produk').val(myObj.keyword_produk);
               $('#edeskripsi_produk').val(myObj.deskripsi_produk);
+              var tkategori = myObj['tkategori'];
+              let txtk ="";
+              tkategori.forEach(tkfungsi);
+              function tkfungsi(value) {
+                if(value["id_kategori"]==myObj.id_kategori)
+                  txtk +=  "<option value="+value['id_kategori']+" selected>"+value['judul_kategori']+"</option>";
+                else
+                  txtk +=  "<option value="+value['id_kategori']+">"+value['judul_kategori']+"</option>";
+              }
+              $('#eid_kategori').html(txtk);
 
+
+              var tproduk_kategori = myObj['tproduk_kategori'];
+              let txtpk ="";
+              tproduk_kategori.forEach(tpkfungsi);
+              function tpkfungsi(value) {
+                if(value["id_produk_kategori"]==myObj.id_produk_kategori)
+                  txtpk +=  "<option value="+value['id_produk_kategori']+" selected>"+value['judul_produk_kategori']+"</option>";
+                else
+                  txtpk +=  "<option value="+value['id_produk_kategori']+">"+value['judul_produk_kategori']+"</option>";
+              }
+              $('#eid_produk_kategori').html(txtpk);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -438,12 +489,24 @@ include('db.php');
             success: function (data) {
               myObj = JSON.parse(data);
               $('#hid_produk').val(myObj.id_produk);
-              $('#hid_produk_kategori').val(myObj.id_produk_kategori);
-              $('#hid_kategori').val(myObj.id_kategori);
               $('#hjudul_produk').val(myObj.judul_produk);
               $('#hharga_produk').val(myObj.harga_produk);
               $('#hkeyword_produk').val(myObj.keyword_produk);
               $('#hdeskripsi_produk').val(myObj.deskripsi_produk);
+
+              var tkategori = myObj['tkategori'];
+              tkategori.forEach(tkfungsi);
+              function tkfungsi(value) {
+                if(value["id_kategori"]==myObj.id_kategori)
+                $('#hid_kategori').val(value['judul_kategori']);
+              }
+
+              var tproduk_kategori = myObj['tproduk_kategori'];
+              tproduk_kategori.forEach(tpkfungsi);
+              function tpkfungsi(value) {
+                if(value["id_produk_kategori"]==myObj.id_produk_kategori)
+                $('#hid_produk_kategori').val(value['judul_produk_kategori']);
+              }
 
             },
             error: function (data) {
