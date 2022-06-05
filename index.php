@@ -7,6 +7,9 @@ include("header.php");
 
 ?>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/bot.css">
+
 <section class="hero-section">
     <div class="hero-items owl-carousel">
 
@@ -163,6 +166,28 @@ include("header.php");
         </div>
     </div>
 </section>
+
+<button class="open-button" onclick="openForm()">Customer Support</button>
+
+<div class="chat-popup" id="myForm">
+    <form action="/action_page.php" class="form-container">
+        <iframe
+            src="https://web.powerva.microsoft.com/environments/Default-d7b95ec4-9a7f-4260-b2e3-eb53f0ac8401/bots/new_bot_45b0df544b7b49ceb84bac87b2d23398/webchat"
+            frameborder="0" style="width: 100%; height: 100%;">
+        </iframe>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
+</div>
+
+<script>
+function openForm() {
+    document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+}
+</script>
 
 <!-- Footer -->
 

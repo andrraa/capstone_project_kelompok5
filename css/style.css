@@ -3,7 +3,8 @@
 html,
 body {
   height: 100%;
-  font-family: "Muli", sans-serif;
+  font-family: "Muli", sans-serif, Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 h1,
