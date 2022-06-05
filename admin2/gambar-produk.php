@@ -34,8 +34,8 @@ include('db.php');
 
 <div class="wrapper">
   <?php 
-  $menuMaster = "menu-open";
-  $menuMA = "active";
+  $menuProduk = "menu-open";
+  $menuPdA = "active";
   $menuGambarProduk = "active";
   include 'header.php';
   ?>

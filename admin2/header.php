@@ -6,13 +6,13 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="admin/index3.html" class="nav-link">Home</a>
+        <a href="produk.php" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="/logout" class="nav-link">Logout</a>
+          <a href="config.php?logout=yes" class="nav-link">Logout</a>
         </li>
       
     </ul>
@@ -62,14 +62,24 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
+
+      <?php
+
+      $email_admin = $_SESSION['email_admin'];
+      $query = "select * from admin where email_admin = '$email_admin'";
+      $rows = mysqli_query($con, $query);
+      while ($row = mysqli_fetch_array($rows)) {
+
+      ?>
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="image/foto_admin/IMG_0015putihedit.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="image/foto_admin/<?php echo $row['foto_admin']?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Figo Alfarqi</a>
+          <a href="#" class="d-block"><?php echo $row['nama_admin']?></a>
         </div>
       </div>
+    <?php } ?>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -95,9 +105,50 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item ">
+                <a href="pelanggan.php" class="nav-link <?php echo $menuPelanggan; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Pelanggan</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="admin.php" class="nav-link <?php echo $menuAdmin; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Admin</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="keranjang.php" class="nav-link <?php echo $menuKeranjang; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Keranjang</p>
+                </a>
+              </li>
+              <li class="nav-item ">
                 <a href="slider.php" class="nav-link <?php echo $menuSlider; ?>">
                   <i class="far fa-circle nav-icon "></i>
                   <p>Slider</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item <?php echo $menuProduk; ?>">
+            <a href="#" class="nav-link <?php echo $menuPdA; ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Produk
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="produk.php" class="nav-link <?php echo $menuPProduk; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Produk</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="gambar-produk.php" class="nav-link <?php echo $menuGambarProduk; ?>">
+                  <i class="far fa-circle nav-icon "></i>
+                  <p>Gambar Produk</p>
                 </a>
               </li>
               <li class="nav-item ">
@@ -112,38 +163,19 @@
                   <p>Kategori</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-item <?php echo $menuPemesanan; ?>">
+            <a href="#" class="nav-link <?php echo $menuPA; ?>">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Pemesanan
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item ">
-                <a href="pelanggan.php" class="nav-link <?php echo $menuPelanggan; ?>">
-                  <i class="far fa-circle nav-icon "></i>
-                  <p>Pelanggan</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="admin.php" class="nav-link <?php echo $menuAdmin; ?>">
-                  <i class="far fa-circle nav-icon "></i>
-                  <p>Admin</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="produk.php" class="nav-link <?php echo $menuProduk; ?>">
-                  <i class="far fa-circle nav-icon "></i>
-                  <p>Produk</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="gambar-produk.php" class="nav-link <?php echo $menuGambarProduk; ?>">
-                  <i class="far fa-circle nav-icon "></i>
-                  <p>Gambar Produk</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="keranjang.php" class="nav-link <?php echo $menuKeranjang; ?>">
-                  <i class="far fa-circle nav-icon "></i>
-                  <p>Keranjang</p>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a href="pemesanan.php" class="nav-link <?php echo $menuPemesanan; ?>">
+                <a href="pemesanan.php" class="nav-link <?php echo $menuPPemesanan; ?>">
                   <i class="far fa-circle nav-icon "></i>
                   <p>Pemesanan</p>
                 </a>
@@ -154,47 +186,9 @@
                   <p>Pemesanan Detail</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/produk-kategori.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Absen Guru</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/laporan-guru" target="_blank" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cetak Laporan Data Guru</p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Data Jadwal
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/produk-kategori.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal Pelajaran</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/produk-kategori.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Jadwal Ujian</p>
-                </a>
-              </li>
             </ul>
           </li>
           
-
-
          </ul>
       </nav>
       <!-- /.sidebar-menu -->
