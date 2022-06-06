@@ -9,7 +9,7 @@ include('db.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Tabel Pemesanan Detail</title>
+  <title>Admin - Tabel Keranjang</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -33,9 +33,9 @@ include('db.php');
   
 <div class="wrapper">
   <?php 
-  $menuPemesanan = "menu-open";
-  $menuPA = "active";
-  $menuPemesananDetail = "active";
+  $menuMaster = "menu-open";
+  $menuMA = "active";
+  $menuKeranjang = "active";
   include 'header.php';
   ?>
   <!-- Main content -->
@@ -45,7 +45,7 @@ include('db.php');
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Data Pemesanan Detail</h3>
+                  <h3 class="card-title">Data Keranjang</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -65,7 +65,7 @@ include('db.php');
                         <div class="col-sm-0" style="margin-right:1%"></div>
                         <input type="submit" class="btn btn-primary col-sm-2" id="btnCari" value="Cari">
                         <div class="col-sm-0" style="margin-right:1%"></div>
-                        <a class="btn btn-secondary col-sm-2" href="pemesanan-detail.php">Reset</a>
+                        <a class="btn btn-secondary col-sm-2" href="keranjang.php">Reset</a>
                         </div>
                       </form>
                     </div>
@@ -74,11 +74,11 @@ include('db.php');
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>ID Pemesanan</th>
                       <th>Judul Produk</th>
+                      <th>Email Pelanggan</th>
                       <th>Ukuran</th>
                       <th>Jumlah</th>
-                      <th>Harga Produk</th>
+                      <th>Tanggal</th>
                       <th>Edit</th>
                       <th>Hapus</th>
                     </tr>
@@ -92,25 +92,25 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from pemesanan_detail join produk on pemesanan_detail.id_produk=produk.id_produk where id_pemesanan like '%$cari%' or judul_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or pemesanan_detail.harga_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
 
-    $query = "select *, pemesanan_detail.harga_produk as pdharga_produk from pemesanan_detail join produk on pemesanan_detail.id_produk=produk.id_produk where id_pemesanan like '%$cari%' or judul_produk like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or pemesanan_detail.harga_produk like '%$cari%' order by id_pemesanan_detail desc limit $halaman_awal, $batas";
+    $query = "select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%' order by id_keranjang desc limit $halaman_awal, $batas";
     $rows = mysqli_query($con, $query);
     while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['id_pemesanan']; ?></td>
                       <td><?php echo $row['judul_produk']; ?></td>
+                      <td><?php echo $row['email_pelanggan']; ?></td>
                       <td><?php echo $row['ukuran']; ?></td>
                       <td><?php echo $row['jumlah']; ?></td>
-                      <td><?php echo $row['pdharga_produk']; ?></td>
-                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_pemesanan_detail"] ?>>Edit</button></td>
-                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_pemesanan_detail"] ?>>Hapus</button></td>
+                      <td><?php echo $row['tanggal']; ?></td>
+                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_keranjang"] ?>>Edit</button></td>
+                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_keranjang"] ?>>Hapus</button></td>
                     </tr>
                   <?php
                   }
@@ -185,21 +185,15 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Tambah Pemesanan Detail</h4>
+                <h4 class="modal-title" id="judulModal">Tambah Keranjang</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
-                  <input type="hidden" name="simpanPemesananDetail">
+                <form class="form-horizontal" method="post" action="keranjang-c.php">
+                  <input type="hidden" name="simpanKeranjang">
                   <div class="card-body">
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="id_pemesanan" class="form-control" placeholder="ID Pemesanan"> 
-                      </div>
-                    </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
@@ -218,6 +212,12 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Ukuran</label>
                       <div class="col-sm-10">
                         <input type="text" name="ukuran" class="form-control" placeholder="Ukuran"> 
@@ -230,9 +230,9 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
                       <div class="col-sm-10">
-                        <input type="text" name="harga_produk" class="form-control" placeholder="Harga Produk"> 
+                        <input type="datetime-local" name="tanggal" class="form-control" placeholder="Tanggal"> 
                       </div>
                     </div>
                   </div>
@@ -251,22 +251,16 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Edit Pemesanan Detail</h4>
+                <h4 class="modal-title" id="judulModal">Edit Keranjang</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
-                  <input type="hidden" name="editPemesananDetail" >
-                  <input type="hidden" name="id_pemesanan_detail" id="eid_pemesanan_detail">
+                <form class="form-horizontal" method="post" action="keranjang-c.php">
+                  <input type="hidden" name="editKeranjang" >
+                  <input type="hidden" name="id_keranjang" id="eid_keranjang">
                   <div class="card-body">
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="eid_pemesanan" name="id_pemesanan" class="form-control" placeholder="ID Pemesanan"> 
-                      </div>
-                    </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
@@ -275,21 +269,27 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="eemail_pelanggan" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan">
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Ukuran</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eukuran" name="ukuran" class="form-control" placeholder="Ukuran"> 
+                        <input type="text" id="eukuran" name="ukuran" class="form-control" placeholder="Ukuran">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Jumlah</label>
                       <div class="col-sm-10">
-                        <input type="text" id="ejumlah" name="jumlah" class="form-control" placeholder="Jumlah"> 
+                        <input type="text" id="ejumlah" name="jumlah" class="form-control" placeholder="Jumlah">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eharga_produk" name="harga_produk" class="form-control" placeholder="Harga Produk"> 
+                        <input type="text" id="etanggal" name="tanggal" class="form-control" placeholder="tanggal">
                       </div>
                     </div>
                   </div>
@@ -314,38 +314,38 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="pemesanan-detail-c.php">
-                  <input type="hidden" name="hapusPemesananDetail" >
-                  <input type="hidden" name="id_pemesanan_detail" id="hid_pemesanan_detail">
+                <form class="form-horizontal" method="post" action="keranjang-c.php">
+                  <input type="hidden" name="hapusKeranjang" >
+                  <input type="hidden" name="id_keranjang" id="hid_keranjang">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Pemesanan</label>
+                      <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hid_pemesanan" name="id_pemesanan" class="form-control" placeholder="ID  Pemesanan" readonly=""> 
+                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="Judul Produk" readonly="">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">ID Produk</label>
+                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="ID Produk" readonly=""> 
+                        <input type="text" id="hemail_pelanggan" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan" readonly="">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Ukuran</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hukuran" name="ukuran" class="form-control" placeholder="Ukuran" readonly=""> 
+                        <input type="text" id="hukuran" name="ukuran" class="form-control" placeholder="Ukuran" readonly="">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Jumlah</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hjumlah" name="jumlah" class="form-control" placeholder="Jumlah" readonly=""> 
+                        <input type="text" id="hjumlah" name="jumlah" class="form-control" placeholder="Jumlah" readonly="">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Harga Produk</label>
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hharga_produk" name="harga_produk" class="form-control" placeholder="Harga Produk" readonly=""> 
+                        <input type="text" id="htanggal" name="tanggal" class="form-control" placeholder="tanggal" readonly="">
                       </div>
                     </div>
                   </div>
@@ -401,20 +401,20 @@ include('db.php');
     
   $('body').on('click', '.btnEdit', function () {
 
-    var id_pemesanan_detail = $(this).data("id");
+    var id_keranjang = $(this).data("id");
     $.ajax({
         data: {
-          'id_pemesanan_detail': id_pemesanan_detail,
+          'id_keranjang': id_keranjang,
         },
-        url: "pemesanan-detail-c.php",
+        url: "keranjang-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#eid_pemesanan_detail').val(myObj.id_pemesanan_detail);
-              $('#eid_pemesanan').val(myObj.id_pemesanan);
+              $('#eid_keranjang').val(myObj.id_keranjang);
+              $('#eemail_pelanggan').val(myObj.email_pelanggan);
               $('#eukuran').val(myObj.ukuran);
               $('#ejumlah').val(myObj.jumlah);
-              $('#eharga_produk').val(myObj.harga_produk);
+              $('#etanggal').val(myObj.tanggal);
 
               var tproduk = myObj['tproduk'];
               let txtp ="";
@@ -436,20 +436,22 @@ include('db.php');
 
   $('body').on('click', '.btnHapus', function () {
 
-    var id_pemesanan_detail = $(this).data("id");
+    var id_keranjang = $(this).data("id");
     $.ajax({
         data: {
-          'id_pemesanan_detail': id_pemesanan_detail,
+          'id_keranjang': id_keranjang,
         },
-        url: "pemesanan-detail-c.php",
+        url: "keranjang-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#hid_pemesanan_detail').val(myObj.id_pemesanan_detail);
-              $('#hid_pemesanan').val(myObj.id_pemesanan);
+              $('#hid_keranjang').val(myObj.id_keranjang);
+              $('#hemail_pelanggan').val(myObj.email_pelanggan);
               $('#hukuran').val(myObj.ukuran);
               $('#hjumlah').val(myObj.jumlah);
-              $('#hharga_produk').val(myObj.harga_produk);
+              $('#htanggal').val(myObj.tanggal);
+
+              alert(myObj.id_produk);
 
               var tpelanggan = myObj['tproduk'];
               tproduk.forEach(tpfungsi);

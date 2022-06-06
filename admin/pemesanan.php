@@ -9,7 +9,7 @@ include('db.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Tabel Gambar Produk</title>
+  <title>Admin - Tabel Pemesanan</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -31,15 +31,13 @@ include('db.php');
 </head>
 <body class="hold-transition sidebar-mini">
   
-
 <div class="wrapper">
   <?php 
-  $menuProduk = "menu-open";
-  $menuPdA = "active";
-  $menuGambarProduk = "active";
+  $menuPemesanan = "menu-open";
+  $menuPA = "active";
+  $menuPPemesanan = "active";
   include 'header.php';
   ?>
-
   <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -47,7 +45,7 @@ include('db.php');
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Data Gambar Produk</h3>
+                  <h3 class="card-title">Data Pemesanan</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -56,7 +54,6 @@ include('db.php');
                     <div class="col-sm-9 col-md-10">
                       <form class="form-horizontal" method="get" action="">
                         <div class="form-group row">
-
                           <?php
                           $cari="";
                           if(isset($_GET['cari'])){ 
@@ -68,7 +65,7 @@ include('db.php');
                         <div class="col-sm-0" style="margin-right:1%"></div>
                         <input type="submit" class="btn btn-primary col-sm-2" id="btnCari" value="Cari">
                         <div class="col-sm-0" style="margin-right:1%"></div>
-                        <a class="btn btn-secondary col-sm-2" href="gambar-produk.php">Reset</a>
+                        <a class="btn btn-secondary col-sm-2" href="pemesanan.php">Reset</a>
                         </div>
                       </form>
                     </div>
@@ -77,14 +74,22 @@ include('db.php');
                     <thead>
                     <tr>
                       <th>No</th>
-                      <th>Judul Produk</th>
-                      <th>Gambar</th>
+                      <th>Nama Pelanggan</th>
+                      <th>Alamat Pengiriman</th>
+                      <th>Jenis Pengiriman</th>
+                      <th>Status</th>
+                      <th>Tanggal</th>
+                      <th>Total</th>
+                      <th>Detail</th>
                       <th>Edit</th>
                       <th>Hapus</th>
                     </tr>
                     </thead>
                     <tbody>
                       <?php
+
+                      $jenis_pengirimans = array('JNE','J&T','sicepat');
+                      $statuss = array('Belum dibayar','Belum Dikirim','Pejalanan','Sampai');
         $batas = 5;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  
@@ -92,23 +97,37 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         
-        $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from pemesanan join pelanggan on pemesanan.id_pelanggan=pelanggan.id_pelanggan where nama_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%'");
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
-        $query = "select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%' order by id_gambar_produk desc limit $halaman_awal, $batas";
-        
-        $rows = mysqli_query($con, $query);
-        while ($row = mysqli_fetch_array($rows)) {
+
+    $query = "select * from pemesanan join pelanggan on pemesanan.id_pelanggan=pelanggan.id_pelanggan where nama_pelanggan like '%$cari%' or alamat_pengiriman like '%$cari%' or jenis_pengiriman like '%$cari%' or status like '%$cari%' or tanggal like '%$cari%' order by id_pemesanan desc limit $halaman_awal, $batas";
+    $rows = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $row['judul_produk']; ?></td>
-                      
-                      <td style="text-align: center;"><img src="image/gambar_produk/<?php echo $row['gambar_produk']; ?>" style="height:100px;max-width:600px"></td>
-                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_gambar_produk"] ?>>Edit</button></td>
-                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_gambar_produk"] ?>>Hapus</button></td>
+                      <td><?php echo $row['nama_pelanggan']; ?></td>
+                      <td><?php echo $row['alamat_pengiriman']; ?></td>
+                      <td><?php echo $row['jenis_pengiriman']; ?></td>
+                      <td><?php echo $row['status']; ?></td>
+                      <td><?php echo $row['tanggal']; ?></td>
+                      <?php
+                      $id_pemesanan = $row['id_pemesanan'];
+                      $query2 = "select sum(harga_produk*jumlah) as total from pemesanan_detail where id_pemesanan = $id_pemesanan";
+                      $rows2 = mysqli_query($con, $query2);
+                      while ($row2 = mysqli_fetch_array($rows2)) {
+                        ?>
+                        <td><?php echo $row2['total']; ?></td>
+                        <?php
+                      }
+                      ?>
+                      <td><button onclick="window.location.href='pemesanan-detail.php?pemesanan=<?php echo $row['id_pemesanan']; ?>'" type="button" class="btn btn-block btn-success btnHapus" data-toggle="modal" >Detail</button></td>
+                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_pemesanan"] ?>>Edit</button></td>
+                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_pemesanan"] ?>>Hapus</button></td>
+
                     </tr>
                   <?php
                   }
@@ -183,25 +202,25 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Tambah Gambar Produk</h4>
+                <h4 class="modal-title" id="judulModal">Tambah Pemesanan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="gambar-produk-c.php" enctype="multipart/form-data">
-                  <input type="hidden" name="simpanGambarProduk">
+                <form class="form-horizontal" method="post" action="pemesanan-c.php">
+                  <input type="hidden" name="simpanPemesanan">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul Produk</label>
+                      <label class="col-sm-2 col-form-label">Nama Pelanggan</label>
                       <div class="col-sm-10">
-                        <select class="form-control select2bs4" style="width: 100%;" name="id_produk">
+                        <select class="form-control select2bs4" style="width: 100%;" name="id_pelanggan">
                           <?php 
-                          $query = "select * from produk order by id_produk desc";
+                          $query = "select * from pelanggan order by id_pelanggan desc";
                             $rows = mysqli_query($con, $query);
                             while ($row = mysqli_fetch_array($rows)) {
                               ?>
-                            <option value="<?php echo $row["id_produk"]?>"><?php echo $row['judul_produk'] ?></option>
+                            <option value="<?php echo $row["id_pelanggan"]?>"><?php echo $row['nama_pelanggan'] ?></option>
                             <?php
                           }
                           ?>
@@ -210,12 +229,39 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Gambar Produk</label>
+                      <label class="col-sm-2 col-form-label">Alamat Pengiriman</label>
                       <div class="col-sm-10">
-                        <div class="custom-file"> 
-                          <input type="file" name = "gambar_produk" class="custom-file-input">
-                          <label class="custom-file-label" for="gambar_produk">Choose file</label>
-                        </div>
+                        <input type="text" name="alamat_pengiriman" class="form-control" placeholder="Alamat Pengiriman"> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jenis Pengiriman</label>
+                      <div class="col-sm-10">
+                        <select class="form-control select2bs4" style="width: 100%;" name="jenis_pengiriman">
+                          <?php foreach($jenis_pengirimans as $jenis_pengiriman){
+                            echo "<option>$jenis_pengiriman</option>";
+                          }
+                          ?>
+                          
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Status</label>
+                      <div class="col-sm-10">
+                        <select class="form-control select2bs4" style="width: 100%;" name="status">
+                          <?php foreach($statuss as $status){
+                            echo "<option>$status</option>";
+                          }
+                          ?>
+                          
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
+                      <div class="col-sm-10">
+                        <input type="datetime-local" name="tanggal" class="form-control" placeholder="Tanggal"> 
                       </div>
                     </div>
                   </div>
@@ -234,38 +280,47 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Edit Gambar Produk</h4>
+                <h4 class="modal-title" id="judulModal">Edit Pemesanan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="gambar-produk-c.php" enctype="multipart/form-data">
-                  <input type="hidden" name="editGambarProduk" >
-                  <input type="hidden" name="id_gambar_produk" id="eid_gambar_produk">
+                <form class="form-horizontal" method="post" action="pemesanan-c.php">
+                  <input type="hidden" name="editPemesanan" >
+                  <input type="hidden" name="id_pemesanan" id="eid_pemesanan">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul Produk</label>
+                      <label class="col-sm-2 col-form-label">Nama Pelanggan</label>
                       <div class="col-sm-10">
-                        <select class="form-control select2bs4" style="width: 100%;" id="eid_produk" name="id_produk">
+                        <select class="form-control select2bs4" style="width: 100%;" id="eid_pelanggan" name="id_pelanggan">
                         </select>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Gambar Produk</label>
+                      <label class="col-sm-2 col-form-label">Alamat Pengiriman</label>
                       <div class="col-sm-10">
-                        <div class="custom-file"> 
-                          <input type="file" id="egambar_produk" name="gambar_produk" class="custom-file-input">
-                          <label class="custom-file-label" for="gambar_produk">Choose file</label>
-                        </div>
+                        <input type="text" id="ealamat_pengiriman" name="alamat_pengiriman" class="form-control" placeholder="Alamat Pengiriman"> 
                       </div>
                     </div>
-                    <div class="form-group row"> 
-                      <label class="col-sm-2 col-form-label">Gambar Saat ini</label> 
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jenis Pengiriman</label>
                       <div class="col-sm-10">
-                        <div class="custom-file"id="esigambar_produk">
-                          <img src="image/gambar_produk/sablon.png" style="margin-bottom: 120px;height:150px;max-width:800px">
-                        </div>
+                        <select class="form-control select2bs4" style="width: 100%;" name="jenis_pengiriman" id="ejenis_pengiriman">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Status</label>
+                      <div class="col-sm-10">
+                        <select class="form-control select2bs4" style="width: 100%;" name="status" id="estatus">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="etanggal" name="tanggal" class="form-control" placeholder="Tanggal"> 
                       </div>
                     </div>
                   </div>
@@ -290,22 +345,38 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="gambar-produk-c.php">
-                  <input type="hidden" name="hapusGambarProduk" >
-                  <input type="hidden" name="id_gambar_produk" id="hid_gambar_produk">
+                <form class="form-horizontal" method="post" action="pemesanan-c.php">
+                  <input type="hidden" name="hapusPemesanan" >
+                  <input type="hidden" name="id_pemesanan" id="hid_pemesanan">
                   <div class="card-body">
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Judul Produk</label>
+                      <label class="col-sm-2 col-form-label">ID Pelanggan</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="Judul Produk" readonly>
+                        <input type="text" id="hid_pelanggan" name="id_pelanggan" class="form-control" placeholder="ID Pelanggan" readonly=""> 
                       </div>
                     </div>
-                    <div class="form-group row"> 
-                      <label class="col-sm-2 col-form-label">Gambar Produk</label> 
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Alamat Pengiriman</label>
                       <div class="col-sm-10">
-                        <div class="custom-file"id="hsigambar_produk">
-                          <img src="image/gambar_produk/sablon.png" style="margin-bottom: 120px;height:150px;max-width:800px">
-                        </div>
+                        <input type="text" id="halamat_pengiriman" name="alamat_pengiriman" class="form-control" placeholder="Alamat Pengiriman" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Jenis Pengiriman</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="hjenis_pengiriman" name="jenis_pengiriman" class="form-control" placeholder="Jenis Pengiriman" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Status</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="hstatus" name="status" class="form-control" placeholder="Status" readonly=""> 
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Tanggal</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="htanggal" name="tanggal" class="form-control" placeholder="Tanggal" readonly=""> 
                       </div>
                     </div>
                   </div>
@@ -361,28 +432,60 @@ include('db.php');
     
   $('body').on('click', '.btnEdit', function () {
 
-    var id_gambar_produk = $(this).data("id");
+    bsCustomFileInput.init();
+  $('.select2bs4').select2({
+        
+    theme: 'bootstrap4',
+    placeholder: "---Pilih---",
+  });
+
+    var id_pemesanan = $(this).data("id");
     $.ajax({
         data: {
-          'id_gambar_produk': id_gambar_produk,
+          'id_pemesanan': id_pemesanan,
         },
-        url: "gambar-produk-c.php",
+        url: "pemesanan-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#eid_gambar_produk').val(myObj.id_gambar_produk);
-              $('#esigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
+              $('#eid_pemesanan').val(myObj.id_pemesanan);
+              $('#ealamat_pengiriman').val(myObj.alamat_pengiriman);
+              $('#etanggal').val(myObj.tanggal);
 
-              var tproduk = myObj['tproduk'];
-              let txtk ="";
-              tproduk.forEach(tpfungsi);
+              var tpelanggan = myObj['tpelanggan'];
+              let txtp ="";
+              tpelanggan.forEach(tpfungsi);
               function tpfungsi(value) {
-                if(value["id_produk"]==myObj.id_produk)
-                  txtk +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
+                if(value["id_pelanggan"]==myObj.id_pelanggan)
+                  txtp +=  "<option value="+value['id_pelanggan']+" selected>"+value['nama_pelanggan']+"</option>";
                 else
-                  txtk +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
+                  txtp +=  "<option value="+value['id_pelanggan']+">"+value['nama_pelanggan']+"</option>";
               }
-              $('#eid_produk').html(txtk);
+              $('#eid_pelanggan').html(txtp);
+
+              var jk = <?php echo json_encode($jenis_pengirimans); ?>;
+              let txtjp = "";
+              jk.forEach(jpfungsi);
+              function jpfungsi(value) {
+                if(value==myObj.jenis_pengiriman)
+                  txtjp +=  "<option selected>"+value+"</option>";
+                else
+                  txtjp +=  "<option>"+value+"</option>";
+              }
+
+              $('#ejenis_pengiriman').html(txtjp);
+
+              var jk = <?php echo json_encode($statuss); ?>;
+              let txts = "";
+              jk.forEach(sfungsi);
+              function sfungsi(value) {
+                if(value==myObj.status)
+                  txts +=  "<option selected>"+value+"</option>";
+                else
+                  txts +=  "<option>"+value+"</option>";
+              }
+
+              $('#estatus').html(txts);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -393,28 +496,30 @@ include('db.php');
 
   $('body').on('click', '.btnHapus', function () {
 
-    var id_gambar_produk = $(this).data("id");
+    var id_pemesanan = $(this).data("id");
     $.ajax({
         data: {
-          'id_gambar_produk': id_gambar_produk,
+          'id_pemesanan': id_pemesanan,
         },
-        url: "gambar-produk-c.php",
+        url: "pemesanan-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#hid_gambar_produk').val(myObj.id_gambar_produk);
-              $('#hid_produk').val(myObj.id_produk);
-              $('#hsigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
+              $('#hid_pemesanan').val(myObj.id_pemesanan);
+              $('#halamat_pengiriman').val(myObj.alamat_pengiriman);
+              $('#hjenis_pengiriman').val(myObj.jenis_pengiriman);
+              $('#hstatus').val(myObj.status);
+              $('#htanggal').val(myObj.tanggal);
 
-              var tproduk = myObj['tproduk'];
-              tproduk.forEach(tpfungsi);
+              var tpelanggan = myObj['tpelanggan'];
+              tpelanggan.forEach(tpfungsi);
               function tpfungsi(value) {
-                if(value["id_produk"]==myObj.id_produk)
-                $('#hid_produk').val(value['judul_produk']);
+                if(value["id_pelanggan"]==myObj.id_pelanggan)
+                $('#hid_pelanggan').val(value['nama_pelanggan']);
               }
-              
+
             },
-            error: function (data) {r
+            error: function (data) {
                 console.log('Error:', data);
             }
         });

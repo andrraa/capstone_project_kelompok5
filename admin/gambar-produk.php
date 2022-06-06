@@ -9,7 +9,7 @@ include('db.php');
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Tabel Keranjang</title>
+  <title>Admin - Tabel Gambar Produk</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -31,13 +31,15 @@ include('db.php');
 </head>
 <body class="hold-transition sidebar-mini">
   
+
 <div class="wrapper">
   <?php 
-  $menuMaster = "menu-open";
-  $menuMA = "active";
-  $menuKeranjang = "active";
+  $menuProduk = "menu-open";
+  $menuPdA = "active";
+  $menuGambarProduk = "active";
   include 'header.php';
   ?>
+
   <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
@@ -45,27 +47,55 @@ include('db.php');
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Data Keranjang</h3>
+                  <h3 class="card-title">Data Gambar Produk</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                  <?php
+                          $cari="";
+                          $produk="";
+                          if(isset($_GET['cari'])){ 
+                            $cari=$_GET['cari'];
+                          }
+                          if(isset($_GET['produk'])){ 
+                            $produk=$_GET['produk'];
+                          }
+                          ?>
+                  <div class="form-group row" style=" float: left;margin-bottom: 10px;width:50%; min-width: 300px;">
+                    <label class="col-sm-3 col-form-label">produk</label>
+                    <div class="col-sm-9">
+                      <form class="form-horizontal" method="get" action="">
+                        <div class="form-group row">
+                        <select class="form-control select2bs4 col-sm-6" style="width: 80%;" name="produk" id="produk">
+                          <?php 
+                          $query = "select * from produk order by id_produk desc";
+                          $rows = mysqli_query($con, $query);
+                          while ($row = mysqli_fetch_array($rows)) {
+                          ?>
+                          <option value="<?php echo $row['id_produk']; ?>"><?php echo $row['judul_produk']; ?></option>
+                          <?php
+                          }
+                          ?>
+
+                        </select>
+                        <div class="col-sm-0" style="margin-right:1%"></div>
+                        <input type="submit" class="btn btn-primary col-sm-2" id="btnPilih" value="Pilih">
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
                   <div class="form-group row" style=" float: right;margin-bottom: 10px;width:50%; min-width: 300px;">
                     <label class="col-sm-3 col-md-2 col-form-label">Cari : </label>
                     <div class="col-sm-9 col-md-10">
                       <form class="form-horizontal" method="get" action="">
                         <div class="form-group row">
-                          <?php
-                          $cari="";
-                          if(isset($_GET['cari'])){ 
-                            $cari=$_GET['cari'];
-                          }
-                          ?>
                         <input type="text" name="cari" class="form-control col-sm-7" placeholder="Cari.."
                         value = "<?php echo $cari; ?>">
                         <div class="col-sm-0" style="margin-right:1%"></div>
                         <input type="submit" class="btn btn-primary col-sm-2" id="btnCari" value="Cari">
                         <div class="col-sm-0" style="margin-right:1%"></div>
-                        <a class="btn btn-secondary col-sm-2" href="keranjang.php">Reset</a>
+                        <a class="btn btn-secondary col-sm-2" href="gambar-produk.php">Reset</a>
                         </div>
                       </form>
                     </div>
@@ -75,10 +105,7 @@ include('db.php');
                     <tr>
                       <th>No</th>
                       <th>Judul Produk</th>
-                      <th>Email Pelanggan</th>
-                      <th>Ukuran</th>
-                      <th>Jumlah</th>
-                      <th>Tanggal</th>
+                      <th>Gambar</th>
                       <th>Edit</th>
                       <th>Hapus</th>
                     </tr>
@@ -91,26 +118,36 @@ include('db.php');
 
         $previous = $halaman - 1;
         $next = $halaman + 1;
-        
-        $data = mysqli_query($con,"select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%'");
+        if($produk==""){
+        $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%'");
+        }
+        else{
+          $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where gambar_produk.id_produk=$produk and judul_produk like '%$cari%'");
+        }
+
+
         $jumlah_data = mysqli_num_rows($data);
         $total_halaman = ceil($jumlah_data / $batas);
         $no = $halaman_awal+1;
 
-
-    $query = "select * from keranjang join produk on keranjang.id_produk=produk.id_produk where judul_produk like '%$cari%' or email_pelanggan like '%$cari%' or ukuran like '%$cari%' or jumlah like '%$cari%' or tanggal like '%$cari%' order by id_keranjang desc limit $halaman_awal, $batas";
-    $rows = mysqli_query($con, $query);
-    while ($row = mysqli_fetch_array($rows)) {
+        if($produk==""){
+          $query = "select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%' order by id_gambar_produk desc limit $halaman_awal, $batas";
+        }
+        else{
+          $query = "select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where gambar_produk.id_produk=$produk and judul_produk like '%$cari%' order by id_gambar_produk desc limit $halaman_awal, $batas";
+        }
+        
+        
+        $rows = mysqli_query($con, $query);
+        while ($row = mysqli_fetch_array($rows)) {
     ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
                       <td><?php echo $row['judul_produk']; ?></td>
-                      <td><?php echo $row['email_pelanggan']; ?></td>
-                      <td><?php echo $row['ukuran']; ?></td>
-                      <td><?php echo $row['jumlah']; ?></td>
-                      <td><?php echo $row['tanggal']; ?></td>
-                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_keranjang"] ?>>Edit</button></td>
-                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_keranjang"] ?>>Hapus</button></td>
+                      
+                      <td style="text-align: center;"><img src="image/gambar_produk/<?php echo $row['gambar_produk']; ?>" style="height:100px;max-width:600px"></td>
+                      <td><button type="button" class="btn btn-block btn-primary btnEdit" data-toggle="modal" data-target="#modalEdit"  data-id=<?php echo $row["id_gambar_produk"] ?>>Edit</button></td>
+                      <td><button type="button" class="btn btn-block btn-danger btnHapus" data-toggle="modal" data-target="#modalHapus" data-id=<?php echo $row["id_gambar_produk"] ?>>Hapus</button></td>
                     </tr>
                   <?php
                   }
@@ -185,14 +222,14 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Tambah Keranjang</h4>
+                <h4 class="modal-title" id="judulModal">Tambah Gambar Produk</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="keranjang-c.php">
-                  <input type="hidden" name="simpanKeranjang">
+                <form class="form-horizontal" method="post" action="gambar-produk-c.php" enctype="multipart/form-data">
+                  <input type="hidden" name="simpanGambarProduk">
                   <div class="card-body">
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
@@ -212,27 +249,12 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
+                      <label class="col-sm-2 col-form-label">Gambar Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan"> 
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Ukuran</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="ukuran" class="form-control" placeholder="Ukuran"> 
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Jumlah</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="jumlah" class="form-control" placeholder="Jumlah"> 
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Tanggal</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="tanggal" class="form-control" placeholder="Tanggal"> 
+                        <div class="custom-file"> 
+                          <input type="file" name = "gambar_produk" class="custom-file-input">
+                          <label class="custom-file-label" for="gambar_produk">Choose file</label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -251,15 +273,15 @@ include('db.php');
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="judulModal">Edit Keranjang</h4>
+                <h4 class="modal-title" id="judulModal">Edit Gambar Produk</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="keranjang-c.php">
-                  <input type="hidden" name="editKeranjang" >
-                  <input type="hidden" name="id_keranjang" id="eid_keranjang">
+                <form class="form-horizontal" method="post" action="gambar-produk-c.php" enctype="multipart/form-data">
+                  <input type="hidden" name="editGambarProduk" >
+                  <input type="hidden" name="id_gambar_produk" id="eid_gambar_produk">
                   <div class="card-body">
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
@@ -269,27 +291,20 @@ include('db.php');
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
+                      <label class="col-sm-2 col-form-label">Gambar Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eemail_pelanggan" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan">
+                        <div class="custom-file"> 
+                          <input type="file" id="egambar_produk" name="gambar_produk" class="custom-file-input">
+                          <label class="custom-file-label" for="gambar_produk">Choose file</label>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Ukuran</label>
+                    <div class="form-group row"> 
+                      <label class="col-sm-2 col-form-label">Gambar Saat ini</label> 
                       <div class="col-sm-10">
-                        <input type="text" id="eukuran" name="ukuran" class="form-control" placeholder="Ukuran">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Jumlah</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="ejumlah" name="jumlah" class="form-control" placeholder="Jumlah">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Tanggal</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="etanggal" name="tanggal" class="form-control" placeholder="tanggal">
+                        <div class="custom-file"id="esigambar_produk">
+                          <img src="image/gambar_produk/sablon.png" style="margin-bottom: 120px;height:150px;max-width:800px">
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -314,38 +329,22 @@ include('db.php');
                 </button>
               </div>
               <div class="modal-body">
-                <form class="form-horizontal" method="post" action="keranjang-c.php">
-                  <input type="hidden" name="hapusKeranjang" >
-                  <input type="hidden" name="id_keranjang" id="hid_keranjang">
+                <form class="form-horizontal" method="post" action="gambar-produk-c.php">
+                  <input type="hidden" name="hapusGambarProduk" >
+                  <input type="hidden" name="id_gambar_produk" id="hid_gambar_produk">
                   <div class="card-body">
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Judul Produk</label>
                       <div class="col-sm-10">
-                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="Judul Produk" readonly="">
+                        <input type="text" id="hid_produk" name="id_produk" class="form-control" placeholder="Judul Produk" readonly>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Email Pelanggan</label>
+                    <div class="form-group row"> 
+                      <label class="col-sm-2 col-form-label">Gambar Produk</label> 
                       <div class="col-sm-10">
-                        <input type="text" id="hemail_pelanggan" name="email_pelanggan" class="form-control" placeholder="Email Pelanggan" readonly="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Ukuran</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="hukuran" name="ukuran" class="form-control" placeholder="Ukuran" readonly="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Jumlah</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="hjumlah" name="jumlah" class="form-control" placeholder="Jumlah" readonly="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Tanggal</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="htanggal" name="tanggal" class="form-control" placeholder="tanggal" readonly="">
+                        <div class="custom-file"id="hsigambar_produk">
+                          <img src="image/gambar_produk/sablon.png" style="margin-bottom: 120px;height:150px;max-width:800px">
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -401,31 +400,28 @@ include('db.php');
     
   $('body').on('click', '.btnEdit', function () {
 
-    var id_keranjang = $(this).data("id");
+    var id_gambar_produk = $(this).data("id");
     $.ajax({
         data: {
-          'id_keranjang': id_keranjang,
+          'id_gambar_produk': id_gambar_produk,
         },
-        url: "keranjang-c.php",
+        url: "gambar-produk-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#eid_keranjang').val(myObj.id_keranjang);
-              $('#eemail_pelanggan').val(myObj.email_pelanggan);
-              $('#eukuran').val(myObj.ukuran);
-              $('#ejumlah').val(myObj.jumlah);
-              $('#etanggal').val(myObj.tanggal);
+              $('#eid_gambar_produk').val(myObj.id_gambar_produk);
+              $('#esigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
 
               var tproduk = myObj['tproduk'];
-              let txtp ="";
+              let txtk ="";
               tproduk.forEach(tpfungsi);
               function tpfungsi(value) {
                 if(value["id_produk"]==myObj.id_produk)
-                  txtp +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
+                  txtk +=  "<option value="+value['id_produk']+" selected>"+value['judul_produk']+"</option>";
                 else
-                  txtp +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
+                  txtk +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
               }
-              $('#eid_produk').html(txtp);
+              $('#eid_produk').html(txtk);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -436,32 +432,28 @@ include('db.php');
 
   $('body').on('click', '.btnHapus', function () {
 
-    var id_keranjang = $(this).data("id");
+    var id_gambar_produk = $(this).data("id");
     $.ajax({
         data: {
-          'id_keranjang': id_keranjang,
+          'id_gambar_produk': id_gambar_produk,
         },
-        url: "keranjang-c.php",
+        url: "gambar-produk-c.php",
         type: "GET",
             success: function (data) {
               myObj = JSON.parse(data);
-              $('#hid_keranjang').val(myObj.id_keranjang);
-              $('#hemail_pelanggan').val(myObj.email_pelanggan);
-              $('#hukuran').val(myObj.ukuran);
-              $('#hjumlah').val(myObj.jumlah);
-              $('#htanggal').val(myObj.tanggal);
+              $('#hid_gambar_produk').val(myObj.id_gambar_produk);
+              $('#hid_produk').val(myObj.id_produk);
+              $('#hsigambar_produk').html("<img src='image/gambar_produk/"+myObj.gambar_produk+"' style='margin-bottom: 120px;height:150px;max-width:800px'>");
 
-              alert(myObj.id_produk);
-
-              var tpelanggan = myObj['tproduk'];
+              var tproduk = myObj['tproduk'];
               tproduk.forEach(tpfungsi);
               function tpfungsi(value) {
                 if(value["id_produk"]==myObj.id_produk)
                 $('#hid_produk').val(value['judul_produk']);
               }
-
+              
             },
-            error: function (data) {
+            error: function (data) {r
                 console.log('Error:', data);
             }
         });
