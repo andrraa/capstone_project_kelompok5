@@ -2976,6 +2976,11 @@ ol {
 /* Large Device: 480px */
 
 @media only screen and (max-width: 767px) {
+  .header-top .f-right .nav-right li.user-icon {
+    position: relative;
+    left: 460px;
+  }
+
   .header-top .top-social {
     display: none;
   }
@@ -3152,6 +3157,7 @@ ol {
 /* Small Device: 320px */
 
 @media only screen and (max-width: 479px) {
+
   .inner-header .advanced-search .category-btn {
     display: none;
   }
@@ -3204,5 +3210,13 @@ ol {
   .benefit-items .single-benefit {
     padding-left: 15px;
     padding-right: 15px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+
+  .header-top .f-right .nav-right li.user-icon {
+    position: relative;
+    left: 400px;
   }
 }
