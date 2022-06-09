@@ -1,10 +1,12 @@
 <?php
+
 $active = "Login";
+
 include("db.php");
 include("functions.php");
 include("header.php");
-?>
 
+?>
 
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -52,7 +54,6 @@ include("header.php");
 </div>
 <!-- Register Form Section End -->
 
-
 <?php
 include('footer.php');
 ?>
@@ -65,16 +66,9 @@ include('footer.php');
 
 if (isset($_POST['login'])) {
 
-
     $log_email = $_POST['cemail'];
     $log_pass = $_POST['password'];
     $c_id = $log_email;
-
-
-    
-
-
-
 
     $sel_customer = "select * from customer where customer_email = '$log_email' AND customer_pass = '$log_pass'";
 

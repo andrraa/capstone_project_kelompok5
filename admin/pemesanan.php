@@ -88,8 +88,8 @@ include('db.php');
                     <tbody>
                       <?php
 
-                      $jenis_pengirimans = array('JNE','J&T','sicepat');
-                      $statuss = array('Belum dibayar','Belum Dikirim','Pejalanan','Sampai');
+                      $jenis_pengirimans = array('JNE','J&T','Sicepat');
+                      $statuss = array('Menunggu Pembayaran','Dikemas','Dikirim','Diterima');
         $batas = 5;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  

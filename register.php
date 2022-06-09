@@ -1,9 +1,11 @@
 <?php
 
 $active = "Register";
+
 include("db.php");
 include("functions.php");
 include('header.php');
+
 ?>
 
 <!-- Breadcrumb Section Begin -->
@@ -76,44 +78,44 @@ include('footer.php');
 ?>
 
 <script>
-    $("#logform").submit(function(event) {
-        var name = $('#username').val();
-        var email = $('#eemail').val();
-        var con = $('#con').val();
+$("#logform").submit(function(event) {
+    var name = $('#username').val();
+    var email = $('#eemail').val();
+    var con = $('#con').val();
 
 
 
-        var letters = /^[A-Za-z]+$/;
-        var em = /\S+@\S+\.\S+/;
-        var numbers = /^[0-9]{11}$/;
+    var letters = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+    var em = /\S+@\S+\.\S+/;
+    var numbers = /^[0-9]{12}$/;
 
 
-        if (!name.match(letters)) {
-            $("#nameerr").html(
-                "<span class='alert alert-danger'>" +
-                "Enter Valid Name (Letters only)</span>");
+    if (!name.match(letters)) {
+        $("#nameerr").html(
+            "<span class='alert alert-danger'>" +
+            "Enter Valid Name (Letters only)</span>");
 
-            event.preventDefault();
+        event.preventDefault();
 
-        }
+    }
 
-        if (!con.match(numbers)) {
-            $("#conerr").html(
-                "<span class='alert alert-danger'>" +
-                "Enter Valid Contact (11 Digit)</span>");
+    if (!con.match(numbers)) {
+        $("#conerr").html(
+            "<span class='alert alert-danger'>" +
+            "Enter Valid Contact (12 Digit)</span>");
 
-            event.preventDefault();
-        }
+        event.preventDefault();
+    }
 
-        if (!email.match(em)) {
-            $("#eerr").html(
-                "<span class='alert alert-danger'>" +
-                "Enter Valid Email</span>");
-            event.preventDefault();
-        }
+    if (!email.match(em)) {
+        $("#eerr").html(
+            "<span class='alert alert-danger'>" +
+            "Enter Valid Email</span>");
+        event.preventDefault();
+    }
 
 
-    });
+});
 </script>
 
 </body>

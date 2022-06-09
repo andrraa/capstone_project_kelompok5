@@ -1,7 +1,11 @@
 <?php
 
+<<<<<<< HEAD
 $db = mysqli_connect('localhost', 'root', '', 'kelompok5');
 
+=======
+$db = mysqli_connect('localhost', 'root', '', 'db_kelompok5');
+>>>>>>> e4083ed0136a132b9c6acef6ff90efcd220087cb
 
 function getRealIpUser()
 {
@@ -20,7 +24,6 @@ function getRealIpUser()
     }
 }
 
-
 function addCart()
 {
 
@@ -37,7 +40,6 @@ function addCart()
         $check_product = "select * from cart where c_id = '$c_id' size = 'size' AND products_id = '$p_id'";
         $run_check = mysqli_query($db, $check_product);
 
-
         if (mysqli_num_rows($run_check) > 0) {
 
             echo "<script>alert('Product already added.')</script>";
@@ -47,13 +49,10 @@ function addCart()
             $query = "Insert into cart (products_id, ip_add,qty,size,date,c_id) values('$p_id','$ip_add','$qty','$size',NOW(),'$c_id')";
             $run_query = mysqli_query($db, $query);
 
-
-            echo "<script>alert('Product added to Cart. Keep Shopping.')</script>";
             echo "<script>window.open('product.php?product_id=$p_id','_self')</script>";
         }
     }
 }
-
 
 // Retrieve Women Products for index slider
 
@@ -64,17 +63,12 @@ function getWProduct()
     $get_products = "select * from products where cat_id=2 order by RAND() LIMIT 7";
     $run_products = mysqli_query($db, $get_products);
 
-
-
     while ($row_products = mysqli_fetch_array($run_products)) {
 
         $products_id = $row_products['products_id'];
         $product_title = $row_products['product_title'];
         $product_price = $row_products['product_price'];
         $product_img1 = $row_products['product_img1'];
-
-
-
 
         echo "
         
@@ -108,8 +102,6 @@ function getMProduct()
     $get_products = "select * from products where cat_id=1 order by RAND() LIMIT 7";
     $run_products = mysqli_query($db, $get_products);
 
-
-
     while ($row_products = mysqli_fetch_array($run_products)) {
 
         $products_id = $row_products['products_id'];
@@ -140,7 +132,6 @@ function getMProduct()
     }
 }
 
-
 // Retrieve Products Catergories
 
 function getProdCat()
@@ -151,16 +142,12 @@ function getProdCat()
     $get_p_cats = "select * from product_categories";
     $run_p_cats = mysqli_query($db, $get_p_cats);
 
-
-
     while ($row_p_cats = mysqli_fetch_array($run_p_cats)) {
 
         $p_cat_id = $row_p_cats['p_cat_id'];
         $p_cat_title = $row_p_cats['p_cat_title'];
 
-
         echo "
-
 
         <li><a href='shop.php?p_cat_id=$p_cat_id'>$p_cat_title</a></li>
 
@@ -172,19 +159,15 @@ function getProdCat()
 
 function getCat()
 {
-
     global $db;
 
     $get_cats = "select * from category";
     $run_cats = mysqli_query($db, $get_cats);
 
-
-
     while ($row_cats = mysqli_fetch_array($run_cats)) {
 
         $cat_id = $row_cats['cat_id'];
         $cat_title = $row_cats['cat_title'];
-
 
         echo "
 
@@ -225,8 +208,6 @@ function getPcatProd()
                     ";
         } else {
 
-
-
             while ($row_products = mysqli_fetch_array($run_products)) {
 
                 $products_id = $row_products['products_id'];
@@ -262,7 +243,6 @@ function getPcatProd()
     }
 }
 
-
 function getcatProd()
 {
     global $db;
@@ -284,10 +264,6 @@ function getcatProd()
 
         $count = mysqli_num_rows($run_products);
 
-
-
-
-
         if ($count == 0) {
 
             echo "
@@ -297,8 +273,6 @@ function getcatProd()
 
                     ";
         } else {
-
-
 
             while ($row_products = mysqli_fetch_array($run_products)) {
 
@@ -354,16 +328,12 @@ function getProd()
         $product_img1 = $row_products['product_img1'];
         $product_img2 = $row_products['product_img2'];
 
-
         $get_p_cat_name = "select p_cat_title from products as P,product_categories as C where P.p_cat_id=C.p_cat_id and products_id=$product_id";
         $run_get_p_cat_name = mysqli_query($db, $get_p_cat_name);
 
-
         $row_p_cat_name = mysqli_fetch_array($run_get_p_cat_name);
 
-
         $p_cat_name = $row_p_cat_name['p_cat_title'];
-
 
         echo "
         
@@ -400,7 +370,6 @@ function getProd()
     }
 }
 
-
 function relatedProducts()
 {
     global $db;
@@ -408,7 +377,6 @@ function relatedProducts()
     if (isset($_GET['product_id'])) {
 
         $product_id = $_GET['product_id'];
-
 
         $get_p_cat_id = "select C.p_cat_id,C.p_cat_title from products as P,product_categories as C where P.p_cat_id=C.p_cat_id and products_id=$product_id";
         $run_get_p_cat_id = mysqli_query($db, $get_p_cat_id);
@@ -420,20 +388,15 @@ function relatedProducts()
         $get_r_products = "select * from products where p_cat_id=$pcat_id LIMIT 1,4";
         $run_get_r_products = mysqli_query($db, $get_r_products);
 
-
         while ($row_get_r_products = mysqli_fetch_array($run_get_r_products)) {
-
-
 
             $p_id = $row_get_r_products['products_id'];
             $p_name = $row_get_r_products['product_title'];
             $p_img1 = $row_get_r_products['product_img1'];
             $p_price = $row_get_r_products['product_price'];
 
-
             if ($p_id != $product_id) {
                 echo "
-
 
         <div class='col-lg-3 col-sm-6'>
             <div class='product-item' >
@@ -460,7 +423,6 @@ function relatedProducts()
     }
 }
 
-
 function items()
 {
 
@@ -477,7 +439,6 @@ function items()
     echo $count_items;
 }
 
-
 function total_price()
 {
 
@@ -486,12 +447,10 @@ function total_price()
     $ip_add = getRealIpUser();
     $c_id = $_SESSION['customer_email'];
     
-
     $total = 0;
 
     $get_items = "select * from cart where c_id = '$c_id'";
     $run_items = mysqli_query($db, $get_items);
-
 
     while ($row_items = mysqli_fetch_array($run_items)) {
         $p_id = $row_items['products_id'];
@@ -544,6 +503,7 @@ function cart_items()
                                 <th>Size</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Size</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -551,12 +511,12 @@ function cart_items()
 
         ";
 
-
         while ($row_items = mysqli_fetch_array($run_itemss)) {
             $p_id = $row_items['products_id'];
             $size = $row_items['size'];
             $pro_qty = $row_items['qty'];
-
+            $pro_size = $row_items['size'];
+            
             $get_item = "select * from products where products_id = '$p_id'";
             $run_item = mysqli_query($db, $get_item);
 
@@ -586,6 +546,7 @@ function cart_items()
                    </div>
                </div>
            </td>
+           <td class='size first-row'>$pro_size</td>
            <td class='total-price first-row'>PKR $pro_total_p</td>
            <td class='close-td first-row'><a href='shopping-cart.php?del=$pro_id'><i class='ti-close' style='color:black'></i></a></td>
        </tr>    
@@ -607,14 +568,11 @@ function cart_icon_prod()
     $run_items = mysqli_query($db, $get_items);
 
 
-
     if (mysqli_num_rows($run_items) == 0) {
         echo  " 
 
-        
         <p style='text-align:center; font-weight:500;color:#fe4231'>Cart Empty </p>
     
-           
         ";
     } else {
 
@@ -652,30 +610,22 @@ function cart_icon_prod()
     }
 }
 
-
 function checkoutProds()
 {
-
 
     global $db;
 
     $ip_add = getRealIpUser();
     $c_id = $_SESSION['customer_email'];
 
-
-
     $get_items = "select * from cart where c_id = '$c_id' ORDER BY date DESC";
     $run_items = mysqli_query($db, $get_items);
 
-
     if (mysqli_num_rows($run_items) == 0) {
         echo  " 
-
-        
+   
         <li class='fw-normal' style='text-align:center;font-weight:bold;font-size:larger;color:#fe4231'>No Items in Cart</li>
     
-           
-        
         ";
     } else {
 

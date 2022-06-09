@@ -1,9 +1,11 @@
 <?php
+
 $active = "Shop";
+
 include("functions.php");
 include("header.php");
-?>
 
+?>
 
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -36,7 +38,6 @@ include("header.php");
     </div>
 </div>
 
-
 <!-- Product Shop Section Begin -->
 <section class="product-shop spad">
     <div class="container">
@@ -50,17 +51,13 @@ include("header.php");
                         getCat();
 
                         ?>
-
                     </ul>
                 </div>
             </div>
 
-
             <div class="col-lg-9 order-1 order-lg-2">
-
                 <div class="product-list">
                     <div class="row">
-
                         <?php
 
                         if (!isset($_GET['p_cat_id'])) {
@@ -79,10 +76,7 @@ include("header.php");
                                 $get_products = "select * from products order by 1 DESC LIMIT $start_from,$per_page";
                                 $run_products = mysqli_query($con, $get_products);
 
-
                                 while ($row_products = mysqli_fetch_array($run_products)) {
-
-
 
                                     $products_id = $row_products['products_id'];
                                     $product_title = $row_products['product_title'];
@@ -113,14 +107,12 @@ include("header.php");
                                 ";
                                 }
                         ?>
-
-
                     </div>
 
                     <div class="row" style="display:flex;justify-content:center; padding:14px">
                         <ul class="pagination">
 
-                    <?php
+                            <?php
 
                                 $query = "select * from products";
                                 $result = mysqli_query($con, $query);
@@ -145,7 +137,6 @@ include("header.php");
                         
                         ";
 
-
                                     for ($i = 2; $i < $total_pages; $i++) {
                                         echo "
                             <li class='page-item'><a class='page-link' href='shop.php?page=" . $i . "'>" . $i . "</a></li>
@@ -168,7 +159,6 @@ Last
 
                         </ul>
                     </div>
-
                     <div class="row">
                         <?php
 
@@ -176,20 +166,17 @@ Last
 
                         getcatProd();
 
-
                         ?>
-
                     </div>
-
-
                 </div>
-
             </div>
         </div>
 </section>
 
 <?php
+
 include('footer.php');
+
 ?>
 
 </body>
