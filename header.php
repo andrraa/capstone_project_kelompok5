@@ -77,7 +77,7 @@ include('db.php');
                                         <div class="insidelog">
 
 
-                                            <?php if ($_SESSION['customer_email'] == 'unset') {
+                                            <?php if ($_SESSION['email_pelanggan'] == 'unset') {
                                         echo "<a href='login.php' class='btn logbtn' style='width: 200px; height:40px'>Login</a>";
                                     } else {
                                         echo "<a href='logout.php' class='btn logbtn' style='width: 200px; height:40px'>Log Out</a>";
@@ -85,12 +85,12 @@ include('db.php');
 
 
                                         </div>
-                                        <?php if ($_SESSION['customer_email'] == 'unset') {
+                                        <?php if ($_SESSION['email_pelanggan'] == 'unset') {
                                     echo "<div class='insidelog'>
                                     <span class='small'>or </span><a href='register.php' class='small'>Sign up Now</a>
                                 </div>";
                                 } ?>
-                                        <?php if (!($_SESSION['customer_email'] == 'unset')) {
+                                        <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                                     echo "
                                 <div class='insidelog' style='border-top: solid 0.2px #e5e5e5;'>
                                     <a href='account.php?orders' class='btn btn-dark' style='color:white;margin:4px 0'>My Account</a>
@@ -104,7 +104,7 @@ include('db.php');
                     </div>
                 </div>
 
-                <div class="col col-lg-2 text-right" style="visibility:      <?php if ($_SESSION['customer_email'] == 'unset') {
+                <div class="col col-lg-2 text-right" style="visibility:      <?php if ($_SESSION['email_pelanggan'] == 'unset') {
                                                                                     echo "hidden";
                                                                                 } ?>">
                     <ul class="nav-right">
@@ -126,7 +126,7 @@ include('db.php');
                                     <h5><?php total_price(); ?></h5>
                                 </div>
                                 <div class="select-button">
-                                    <a href="shopping-cart.php" class="primary-btn view-card">VIEW ALL ITEMS</a>
+                                    <a href="shopping-cart.php" class="primary-btn view-card">LIHAT SEMUA ITEM</a>
                                     <a href="check-out.php" class="primary-btn checkout-btn">CHECK OUT</a>
                                 </div>
                             </div>

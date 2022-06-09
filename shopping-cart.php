@@ -16,7 +16,7 @@ include('header.php');
                 <div class="breadcrumb-text product-more">
                     <a href="index.php"><i class="fa fa-home"></i> Home</a>
                     <a href="shop.php">Shop</a>
-                    <span>Shopping Cart</span>
+                    <span>Keranjang belanja</span>
                 </div>
             </div>
         </div>
@@ -39,8 +39,8 @@ include('header.php');
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="cart-buttons">
-                            <a href="shop.php" class="primary-btn continue-shop">Continue shopping</a>
-                            <a href="shopping-cart.php?upd=" class="primary-btn up-cart">Update cart</a>
+                            <a href="shop.php" class="primary-btn continue-shop">Lanjut belanja</a>
+                            <a href="shopping-cart.php?upd=" class="primary-btn up-cart">Update keranjang</a>
                         </div>
                     </div>
                     <div class="col-lg-4 offset-lg-4">
@@ -75,7 +75,7 @@ if (isset($_GET['del'])) {
 
     $p_id = $_GET['del'];
 
-    $query = "Delete from cart where products_id='$p_id'";
+    $query = "Delete from keranjang where id_produk='$p_id'";
 
     $run_query = mysqli_query($con, $query);
 
@@ -86,7 +86,7 @@ if (isset($_GET['upd'])) {
 
     $p_id = $_GET['del'];
 
-    $query = "Delete from cart where products_id='$p_id'";
+    $query = "Delete from keranjang where id_produk='$p_id'";
 
     $run_query = mysqli_query($con, $query);
 

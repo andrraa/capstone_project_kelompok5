@@ -2,8 +2,8 @@
 
 session_start();
 
-if (!isset($_SESSION['customer_email'])) {
-    $_SESSION['customer_email'] = 'unset';
+if (!isset($_SESSION['email_pelanggan'])) {
+    $_SESSION['email_pelanggan'] = 'unset';
 } else {
     return;
 }

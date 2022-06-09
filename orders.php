@@ -1,52 +1,46 @@
 <?php
 
-if (isset($_SESSION['customer_email'])) {
+if (isset($_SESSION['email_pelanggan'])) {
 
-    $c_id = $_SESSION['customer_email'];
-
-    $query = "select * from customer where customer_email= '$c_id'";
-
+    $email_pelanggan = $_SESSION['email_pelanggan'];
+    $query = "select * from pelanggan where email_pelanggan='$email_pelanggan'";
     $run_query = mysqli_query($con, $query);
-
-
     $get_query = mysqli_fetch_array($run_query);
+    $id_pelanggan = $get_query['id_pelanggan'];
 
-    $custom_id = $get_query['customer_id'];
-
-
-    $get_items = "select * from orders where c_id = '$custom_id' ORDER BY date DESC";
-    $run_items = mysqli_query($db, $get_items);
+    $get_items = "select * from pemesanan where id_pelanggan = $id_pelanggan ORDER BY tanggal DESC";
+    $run_items = mysqli_query($con, $get_items);
 
     echo "
     <div class='cart-table' style='min-height: 150px;'>
     <table>
         <thead style='font-size: larger;'>
             <tr>
-                <th>Order ID</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Date</th>
+                <th>ID Pemesanan</th>
+                <th>Total Harga</th>
+                <th>Jumlah</th>
+                <th>Tanggal</th>
             </tr>
         </thead>
         <tbody>
     ";
 
     while ($row_items = mysqli_fetch_array($run_items)) {
-        $o_id = $row_items['order_id'];
-        $o_qty = $row_items['order_qty'];
-        $o_price = $row_items['order_price'];
-        $o_date = $row_items['date'];
+        $id_pemesanan = $row_items['id_pemesanan'];
+        $jumlah_belanja = $row_items['jumlah_belanja'];
+        $total_harga = $row_items['total_harga'];
+        $tanggal = $row_items['tanggal'];
 
         echo
 
             "<tr style='border-bottom: 0.5px solid #ebebeb'>
-        <td class='first-row'>$o_id</td>
+        <td class='first-row'>$id_pemesanan</td>
         <td class='first-row'>
-            $o_price
+            $total_harga
         </td>
-        <td class='first-row'>$o_qty</td>
+        <td class='first-row'>$jumlah_belanja</td>
         <td class='first-row'>
-            $o_date
+            $tanggal
         </td>
     </tr>";
     }

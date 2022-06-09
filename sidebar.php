@@ -1,21 +1,21 @@
 <?php 
 
-    $emal = $_SESSION['customer_email'];
-    $query = "select * from customer where customer_email = '$emal'";
+    $email_pelanggan = $_SESSION['email_pelanggan'];
+    $query = "select * from pelanggan where email_pelanggan = '$email_pelanggan'";
 
     $run_query = mysqli_query($con,$query);
 
     $row_query = mysqli_fetch_array($run_query);
 
-    $cname = $row_query['customer_name'];
-    $cimage = $row_query['customer_image'];
+    $nama_pelanggan = $row_query['nama_pelanggan'];
+    $foto_pelanggan = $row_query['foto_pelanggan'];
     
 ?>
 
 <div class="card">
-    <img class="card-img-top" src="img/customer/<?php echo $cimage ?>" alt="<?php echo $cname ?>" style="width:100%">
+    <img class="card-img-top" src="admin/image/foto_pelanggan/<?php echo $foto_pelanggan ?>" alt="<?php echo $nama_pelanggan ?>" style="width:100%">
     <h4 style="text-align: center;padding:15px 0">
-        <?php echo $cname ?>
+        <?php echo $nama_pelanggan ?>
     </h4>
     <div class="card-body" style="border-top:0.2px solid #e9e9e9 ;">
         <ul class="list-group">
@@ -23,14 +23,14 @@
                                               echo  "style = 'background-color:#fe4231'";
                                             } ?>>
                 <a href="account.php?orders">
-                    <i class="fa fa-list"></i> My Orders
+                    <i class="fa fa-list"></i> Pesanan Saya
                 </a>
             </li>
             <li class="list-group-item" <?php if (isset($_GET['details'])) {
                                                 echo  "style = 'background-color:#fe4231'";
                                             } ?>>
                 <a href="account.php?details">
-                    <i class="fa fa-bolt"></i> My Details
+                    <i class="fa fa-bolt"></i> Profil Saya
                 </a>
             </li>
         </ul>

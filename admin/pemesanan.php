@@ -555,8 +555,8 @@ include('db.php');
 
     $t="";
     if(isset($_SESSION['t'])) {
-        $t = $_SESSION['t'];
-        unset($_SESSION['t']);
+      $t = $_SESSION['t'];
+      unset($_SESSION['t']);
     }
 
     ?>

@@ -32,12 +32,12 @@ include("header.php");
                     <h2>Login</h2>
                     <form action="login.php" method="post">
                         <div class="group-input">
-                            <label for="username">Email *</label>
+                            <label for="username">Email </label>
                             <input type="text" id="username" name="cemail" required>
                             <div id="email_error"></div>
                         </div>
                         <div class="group-input">
-                            <label for="pass">Password *</label>
+                            <label for="pass">Password </label>
                             <input type="password" id="pass" name="password" required>
                             <div id="password_error"></div>
                         </div>
@@ -66,25 +66,24 @@ include('footer.php');
 
 if (isset($_POST['login'])) {
 
-    $log_email = $_POST['cemail'];
+    $email_pelanggan = $_POST['cemail'];
     $log_pass = $_POST['password'];
-    $c_id = $log_email;
 
-    $sel_customer = "select * from customer where customer_email = '$log_email' AND customer_pass = '$log_pass'";
+    $sel_pelanggan = "select * from pelanggan where email_pelanggan = '$email_pelanggan' AND password_pelanggan = '$log_pass'";
 
-    $run_sel_c = mysqli_query($con, $sel_customer);
+    $run_sel_c = mysqli_query($con, $sel_pelanggan);
 
     $get_ip = getRealIpUser();
 
-    $check_customer = mysqli_num_rows($run_sel_c);
+    $check_pelanggan = mysqli_num_rows($run_sel_c);
 
-    $select_cart = "select * from cart where c_id = '$c_id'";
+    $select_keranjang = "select * from keranjang where email_pelanggan = '$email_pelanggan'";
 
-    $run_sel_cart = mysqli_query($con, $select_cart);
+    $run_sel_keranjang = mysqli_query($con, $select_keranjang);
 
-    $check_cart = mysqli_num_rows($run_sel_cart);
+    $check_keranjang = mysqli_num_rows($run_sel_keranjang);
 
-    if ($check_customer == 0) {
+    if ($check_pelanggan == 0) {
 
         echo "
         <script>
@@ -96,13 +95,13 @@ if (isset($_POST['login'])) {
         exit();
     }
 
-    if ($check_customer == 1 and $check_cart == 0) {
+    if ($check_pelanggan == 1 and $check_keranjang == 0) {
 
-        $_SESSION['customer_email'] = $log_email;
+        $_SESSION['email_pelanggan'] = $email_pelanggan;
 
         echo  "<script>window.open('index.php?stat=1','_self')</script>";
     } else {
-        $_SESSION['customer_email'] = $log_email;
+        $_SESSION['email_pelanggan'] = $email_pelanggan;
 
     
         echo  "<script>window.open('check-out.php?','_self')</script>";
