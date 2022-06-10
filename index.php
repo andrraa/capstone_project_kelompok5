@@ -115,7 +115,7 @@ include("header.php");
 			<div class="col-lg-3">
 				<div class="product-large set-bg" data-setbg="img/women-large.jpg">
 					<h2>Perempuan</h2>
-					<a href="shop.php?id_kategori=2">Temukan Lebih</a>
+					<a href="shop.php?id_kategori=5">Temukan Lebih</a>
 				</div>
 			</div>
 			<div class="col-lg-8 offset-lg-1">
@@ -152,7 +152,7 @@ include("header.php");
 			<div class="col-lg-3 offset-lg-1">
 				<div class="product-large set-bg m-large" data-setbg="img/men-large.jpg">
 					<h2>Laki-aki</h2>
-					<a href="shop.php?id_kategori=1">Temukan Lebih</a>
+					<a href="shop.php?id_kategori=13">Temukan Lebih</a>
 				</div>
 			</div>
 		</div>
@@ -191,11 +191,24 @@ if (isset($_GET['stat'])) {
 	echo "
 		<script>
 				bootbox.alert({
-					message: 'Welcome! You are logged in.',
+					message: 'Selamat datang, Anda telah login',
 					backdrop: true
 				});
 		</script>";
 }
+
+if (isset($_SESSION['new'])) {
+	unset($_SESSION['new']);
+	echo "
+		<script>
+				bootbox.alert({
+					message: 'Akun telah terdaftar, Anda telah login',
+					backdrop: true
+				});
+		</script>";
+}
+
+
 ?>
 
 </body>

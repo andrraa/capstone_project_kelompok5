@@ -83,6 +83,17 @@ include('footer.php');
 
 <?php
 
+if (isset($_SESSION['new'])) {
+	unset($_SESSION['new']);
+	echo "
+		<script>
+				bootbox.alert({
+					message: 'Akun telah terdaftar, Anda telah login',
+					backdrop: true
+				});
+		</script>";
+}
+
 if (isset($_POST['jpengiriman'])) {
 	$jpengiriman = $_POST['jpengiriman'];
 	$email_pelanggan = $_SESSION['email_pelanggan'];

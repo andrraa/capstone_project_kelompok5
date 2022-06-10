@@ -23,7 +23,7 @@ if (isset($_SESSION['email_pelanggan'])) {
 		<tbody>
 	";
 
-	$get_pemesanan = "select * from pemesanan";
+	$get_pemesanan = "select * from pemesanan where id_pelanggan = $id_pelanggan";
 	$run_pemesanan = mysqli_query($con, $get_pemesanan);
 	while ($row_pemesanan = mysqli_fetch_array($run_pemesanan)) {
 	

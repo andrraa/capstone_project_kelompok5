@@ -45,7 +45,7 @@ include("header.php");
                         <button name="login" class="site-btn login-btn">Sign In</button>
                     </form>
                     <div class="switch-login">
-                        <a href="register.php" class="or-login">Or Create An Account</a>
+                        <a href="register.php" class="or-login">atau buat akun baru</a>
                     </div>
                 </div>
             </div>
