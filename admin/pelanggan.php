@@ -86,7 +86,7 @@ include('db.php');
                     <tbody>
                       <?php
                       $jenis_kelamins = array('Laki-laki','Perempuan');
-        $batas = 5;
+        $batas = 10;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  
 
@@ -315,10 +315,6 @@ include('db.php');
                       <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                       <div class="col-sm-10">
                         <select class="form-control select2bs4" style="width: 100%;" id="ejenis_kelamin" name="jenis_kelamin">
-                          <?php foreach($jenis_kelamins as $jenis_kelamin){
-                            echo "<option>$jenis_kelamin</option>";
-                          }
-                          ?>
                           
                         </select>
                       </div>
@@ -459,7 +455,7 @@ include('db.php');
               let txt = "";
               jk.forEach(jkfungsi);
               function jkfungsi(value) {
-                if(value==myObj.jenis_kelamin_admin)
+                if(value==myObj.jenis_kelamin_pelanggan)
                   txt +=  "<option selected>"+value+"</option>";
                 else
                   txt +=  "<option>"+value+"</option>";

@@ -112,7 +112,7 @@ include('db.php');
                     </thead>
                     <tbody>
                       <?php
-        $batas = 5;
+        $batas = 10;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  
 
@@ -390,6 +390,9 @@ include('db.php');
 <script src="resource/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script type="text/javascript">
+
+  var pm = <?php echo json_encode($produk); ?>;
+  $('#produk').val(pm);
 
   bsCustomFileInput.init();
   $('.select2bs4').select2({

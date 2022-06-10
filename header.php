@@ -189,7 +189,7 @@ include('db.php');
 
         $item = $_POST["search"];
 
-        $get_product = "select * from products where product_title LIKE '%$item%' LIMIT 0,1";
+        $get_product = "select * from produk where judul_produk LIKE '%$item%' LIMIT 0,1";
 
         $run_product = mysqli_query($con, $get_product);
 
@@ -199,9 +199,9 @@ include('db.php');
 
             $row_product = mysqli_fetch_array($run_product);
 
-            $products_id = $row_product['products_id'];
+            $products_id = $row_product['id_produk'];
 
-            echo "<script>window.open('product.php?product_id=$products_id','_self')</script>";
+            echo "<script>window.open('product.php?id_produk=$products_id','_self')</script>";
         } else {
 
             echo "

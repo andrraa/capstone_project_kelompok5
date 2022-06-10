@@ -408,14 +408,14 @@ function relatedproduk()
 
 		$id_produk_kategori = $row_id_produk_kategori['id_produk_kategori'];
 
-		$get_r_produk = "select * from produk where id_produk_kategori=$id_produk_kategori LIMIT 1,4";
-		$run_get_r_produk = mysqli_query($con, $get_r_produk);
+		$get_c_produk = "select * from produk where id_produk_kategori=$id_produk_kategori LIMIT 3";
+		$run_get_c_produk = mysqli_query($con, $get_c_produk);
 
-		while ($row_get_r_produk = mysqli_fetch_array($run_get_r_produk)) {
+		while ($row_get_r_produk = mysqli_fetch_array($run_get_c_produk)) {
 
 			$p_id = $row_get_r_produk['id_produk'];
 			$judul_produk = $row_get_r_produk['judul_produk'];
-			$get_image = "select * from gambar_produk where id_produk=$id_produk order by RAND() LIMIT 1";
+			$get_image = "select * from gambar_produk where id_produk=$p_id order by RAND() LIMIT 1";
 			$run_image = mysqli_query($con, $get_image);
 			while ($row_image = mysqli_fetch_array($run_image)) {
 				$gambar_produk = $row_image['gambar_produk'];

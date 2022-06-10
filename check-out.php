@@ -27,7 +27,7 @@ include("header.php");
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
 	<div class="container">
-		<form class="checkout-form" action="coba.php" method="POST">
+		<form class="checkout-form" action="check-out.php" method="POST">
 			<div class="row">
 
 				<div class="col-lg-6" <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
@@ -92,31 +92,33 @@ if (isset($_POST['jpengiriman'])) {
 	$id_pelanggan = $get_query['id_pelanggan'];
 	$alamat_pelanggan = $get_query['alamat_pelanggan'];
 
+
+
+	$order = "insert into pemesanan (id_pelanggan, alamat_pengiriman, jenis_pengiriman, status, tanggal) values($id_pelanggan,'$alamat_pelanggan','$jpengiriman','Menunggu Pembayaran',NOW())";
+	$run_order = mysqli_query($con, $order);
+
+	$get_order = "SELECT LAST_INSERT_ID()";
+	$run_order = mysqli_query($con, $get_order);
+	$id_pemesanan = mysqli_fetch_array($run_order);
+	$id_pemesanan = $id_pemesanan[0];
+
 	$get_items = "select * from keranjang where email_pelanggan = '$email_pelanggan'";
 	$run_items = mysqli_query($con, $get_items);
-	$final_price = 0;
+
 	while ($row_items = mysqli_fetch_array($run_items)) {
 		$id_produk = $row_items['id_produk'];
 		$jumlah = $row_items['jumlah'];
-
+		$ukuran = $row_items['ukuran'];
 		$get_item = "select * from produk where id_produk = '$id_produk'";
 		$run_item = mysqli_query($con, $get_item);
-		$total_q=0;
 		while ($row_item = mysqli_fetch_array($run_item)) {
-
 			$harga_produk = $row_item['harga_produk'];
-			$total_q += $jumlah;
-			$pro_total_p = $harga_produk * $jumlah;
 		}
+		$order_detail = "insert into pemesanan_detail(id_pemesanan, id_produk, ukuran, jumlah, harga_produk) values($id_pemesanan,'$id_produk','$ukuran',$jumlah,$harga_produk)";
+		$run_order_detail = mysqli_query($con, $order_detail);
 
-		$final_price += $pro_total_p;
 	}
-	$order = "insert into pemesanan (id_pelanggan, alamat_pengiriman, jenis_pengiriman, status, tanggal) values($id_pelanggan,'$alamat_pelanggan','$jpengiriman,'Menunggu Pembayaran',NOW())";
 
-	$run_order = mysqli_query($con, $order);
-
-	var_dump($id_pelanggan);
-	dd();
 	$pembersih_keranjang = "delete from keranjang where email_pelanggan = '$email_pelanggan'";
 
 	$run_clear = mysqli_query($con, $pembersih_keranjang);

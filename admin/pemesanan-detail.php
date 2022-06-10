@@ -115,7 +115,7 @@ include('db.php');
                     <tbody>
                       <?php
                       $ukurans = array('S','M','L','XL');
-        $batas = 5;
+        $batas = 10;
         $halaman = isset($_GET['halaman'])?(int)$_GET['halaman'] : 1;
         $halaman_awal = ($halaman>1) ? ($halaman * $batas) - $batas : 0;  
 
@@ -259,7 +259,12 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Ukuran</label>
                       <div class="col-sm-10">
-                        <input type="text" name="ukuran" class="form-control" placeholder="Ukuran"> 
+                        <select class="form-control select2bs4" style="width: 100%;" name="ukuran">
+                          <?php foreach($ukurans as $ukuran){
+                            echo "<option>$ukuran</option>";
+                          }
+                          ?>
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -316,7 +321,8 @@ include('db.php');
                     <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Ukuran</label>
                       <div class="col-sm-10">
-                        <input type="text" id="eukuran" name="ukuran" class="form-control" placeholder="Ukuran"> 
+                        <select class="form-control select2bs4" style="width: 100%;" id="eukuran" name="ukuran">
+                        </select>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -468,6 +474,18 @@ include('db.php');
                   txtp +=  "<option value="+value['id_produk']+">"+value['judul_produk']+"</option>";
               }
               $('#eid_produk').html(txtp);
+
+              var uk = <?php echo json_encode($ukurans); ?>;
+              let txtu = "";
+              uk.forEach(ukfungsi);
+              function ukfungsi(value) {
+                if(value==myObj.ukuran)
+                  txtu +=  "<option selected>"+value+"</option>";
+                else
+                  txtu +=  "<option>"+value+"</option>";
+              }
+
+              $('#eukuran').html(txtu);
             },
             error: function (data) {
                 console.log('Error:', data);

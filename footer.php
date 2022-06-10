@@ -37,11 +37,11 @@
                                                             };  ?>;">
                     <h5>Account</h5>
                     <ul>
-                        <?php if (!($_SESSION['customer_email'] == 'unset')) {
+                        <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                             echo "<li><a href='account.php?orders'>My Account</a></li>";
                         } ?>
                         <li><a href="
-                        <?php if (!($_SESSION['customer_email'] == 'unset')) {
+                        <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                             echo "shopping-cart.php";
                         } else {
                             echo "login.php";
@@ -49,7 +49,7 @@
                          ?>">Shopping Cart</a></li>
 
                         <li><a href="
-                        <?php if (!($_SESSION['customer_email'] == 'unset')) {
+                        <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                             echo "check-out.php";
                         } else {
                             echo "login.php";
