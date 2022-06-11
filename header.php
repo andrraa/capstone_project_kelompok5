@@ -52,7 +52,7 @@ include('db.php');
             <div class="row">
                 <div class="col-md-3 logo">
                     <a href="index.php">
-                        <span>Inferno Co.</span>
+                        <span>Fashops</span>
                     </a>
                 </div>
 
