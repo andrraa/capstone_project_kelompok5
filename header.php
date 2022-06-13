@@ -9,9 +9,9 @@ include('db.php');
 <html lang="en">
 
 <meta charset="UTF-8">
-<meta name="description" content="Inferno Co.">
+<meta name="description" content="Fashops">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inferno Co.</title>
+<title>Fashops</title>
 
 <!-- Google Fonts Used -->
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@ include('db.php');
                 <div class="col-md-6">
                     <form method="post">
                         <div class="input-group">
-                            <input type="text" name="search" placeholder="Search our Store" required>
+                            <input type="text" name="search" placeholder="Cari Produk" required>
                             <button type="submit" name="submit"><i class="ti-search"></i></button>
                         </div>
                     </form>
@@ -87,7 +87,7 @@ include('db.php');
                                         </div>
                                         <?php if ($_SESSION['email_pelanggan'] == 'unset') {
                                     echo "<div class='insidelog'>
-                                    <span class='small'>or </span><a href='register.php' class='small'>Sign up Now</a>
+                                    <span class='small'>or </span><a href='register.php' class='small'>Daftar</a>
                                 </div>";
                                 } ?>
                                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
@@ -145,7 +145,7 @@ include('db.php');
             <div class="nav-depart">
                 <div class="depart-btn">
                     <i class="ti-menu"></i>
-                    <span>All Categories</span>
+                    <span>Semua Kategori</span>
                     <ul class="depart-hover">
                         <?php
 
@@ -157,9 +157,9 @@ include('db.php');
             </div>
             <nav class="nav-menu mobile-menu">
                 <ul>
-                    <li class="<?php if ($active == 'Home') echo "active" ?>"><a href="index.php">Home</a></li>
-                    <li class="<?php if ($active == 'Shop') echo "active" ?>"><a href="shop.php">Shop</a></li>
-                    <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact.php">Contact</a>
+                    <li class="<?php if ($active == 'Home') echo "active" ?>"><a href="index.php">Beranda</a></li>
+                    <li class="<?php if ($active == 'Shop') echo "active" ?>"><a href="shop.php">Toko</a></li>
+                    <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact.php">Kontak</a>
                     </li>
 
                 </ul>

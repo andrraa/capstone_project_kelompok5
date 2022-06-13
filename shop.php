@@ -14,7 +14,7 @@ include("header.php");
 			<div class="col-lg-12">
 				<div class="breadcrumb-text">
 					<a href="index.php"><i class="fa fa-home"></i> Home</a>
-					<a href="shop.php">Shop</a>
+					<a href="shop.php">Toko</a>
 
 					<?php
 					if (isset($_GET['id_produk_kategori'])) {

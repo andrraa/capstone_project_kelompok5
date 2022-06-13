@@ -34,7 +34,7 @@ include("header.php");
 							<h1>$heading_slider</h1>
 							<p>$text_slider
 							</p>
-							<a href='shop.php' class='primary-btn'>Shop Now</a>
+							<a href='shop.php' class='primary-btn'>Belanja Sekarang!</a>
 						</div>
 					</div>
 					<div class='off-card'>
@@ -63,7 +63,7 @@ include("header.php");
 							<h1 style='color: white;'>$heading_slider</h1>
 							<p style='color: white;'>$text_slider
 							</p>
-							<a href='shop.php' class='primary-btn'>Shop Now</a>
+							<a href='shop.php' class='primary-btn'>Belanja Sekarang!</a>
 						</div>
 					</div>
 				</div>
@@ -114,7 +114,7 @@ include("header.php");
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="product-large set-bg" data-setbg="img/women-large.jpg">
-					<h2>Perempuan</h2>
+					<h2>Wanita</h2>
 					<a href="shop.php?id_kategori=5">Temukan Lebih</a>
 				</div>
 			</div>
@@ -151,7 +151,7 @@ include("header.php");
 			</div>
 			<div class="col-lg-3 offset-lg-1">
 				<div class="product-large set-bg m-large" data-setbg="img/men-large.jpg">
-					<h2>Laki-aki</h2>
+					<h2>Pria</h2>
 					<a href="shop.php?id_kategori=13">Temukan Lebih</a>
 				</div>
 			</div>

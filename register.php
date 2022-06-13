@@ -15,7 +15,7 @@ include('header.php');
 			<div class="col-lg-12">
 				<div class="breadcrumb-text">
 					<a href="Index.php"><i class="fa fa-home"></i> Home</a>
-					<span>Register</span>
+					<span>Daftar</span>
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@ include('header.php');
 		<div class="row">
 			<div class="col-lg-6 offset-lg-3">
 				<div class="register-form">
-					<h2>Register</h2>
+					<h2>Daftar</h2>
 					<form action="register.php" method="post" enctype="multipart/form-data" id="logform">
 						<div class="group-input">
 							<label for="nama_pelanggan">Nama</label>
@@ -60,7 +60,7 @@ include('header.php');
 							<label for="con-pass">Foto</label>
 							<input type="file" name="foto_pelanggan" style="border: none; margin-top:6px;" required>
 						</div>
-						<button type="submit" class="site-btn register-btn" name="register">REGISTER</button>
+						<button type="submit" class="site-btn register-btn" name="register">DAFTAR</button>
 					</form>
 					<div class="switch-login">
 						<a href="login.php" class="or-login">atau Login</a>

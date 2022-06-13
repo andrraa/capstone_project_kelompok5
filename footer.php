@@ -5,13 +5,13 @@
             <div class="col-lg-3">
                 <div class="footer-left">
                     <div class="footer-logo">
-                        <a href="index.php"> <span>Inferno Co.</span>
+                        <a href="index.php"> <span>Fashops</span>
                         </a>
                     </div>
                     <ul>
-                        <li>+92 3213352126</li>
-                        <li>Inferno Co.@gmail.com</li>
-                        <li>NUST H-12, Islamabad</li>
+                        <li>+62 813332232</li>
+                        <li>Fashops.id@gmail.com</li>
+                        <li>Jakarta, Indonesia</li>
                     </ul>
                     <div class="footer-social">
                         <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -23,11 +23,11 @@
             </div>
             <div class="col-lg-2 offset-lg-1">
                 <div class="footer-widget">
-                    <h5>Information</h5>
+                    <h5>Informasi</h5>
                     <ul>
-                        <li><a href="index.php">About Us</a></li>
-                        <li><a href="contact.php">Contact</a></li>
-                        <li><a href="index.php">Privacy Policy</a></li>
+                        <li><a href="index.php">Tentang Kita</a></li>
+                        <li><a href="contact.php">Kontak</a></li>
+                        <li><a href="index.php">Kebijakan Pribadi</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="footer-widget" style="display: <?php if ($active == 'Register' || $active == 'Login') {
                                                                 echo 'none';
                                                             };  ?>;">
-                    <h5>Account</h5>
+                    <h5>Akun</h5>
                     <ul>
                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                             echo "<li><a href='account.php?orders'>My Account</a></li>";
@@ -46,7 +46,7 @@
                         } else {
                             echo "login.php";
                         }
-                         ?>">Shopping Cart</a></li>
+                         ?>">Keranjang Belanja</a></li>
 
                         <li><a href="
                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {

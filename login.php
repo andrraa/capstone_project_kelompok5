@@ -42,7 +42,7 @@ include("header.php");
                             <div id="password_error"></div>
                         </div>
 
-                        <button name="login" class="site-btn login-btn">Sign In</button>
+                        <button name="login" class="site-btn login-btn">Masuk</button>
                     </form>
                     <div class="switch-login">
                         <a href="register.php" class="or-login">atau buat akun baru</a>
