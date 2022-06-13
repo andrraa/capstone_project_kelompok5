@@ -5,12 +5,12 @@
             <div class="col-lg-3">
                 <div class="footer-left">
                     <div class="footer-logo">
-                        <a href="index.php"> <span>Inferno Co.</span>
+                        <a href="home"> <span>Fashops</span>
                         </a>
                     </div>
                     <ul>
                         <li>+92 3213352126</li>
-                        <li>Inferno Co.@gmail.com</li>
+                        <li>Fashops Co.@gmail.com</li>
                         <li>NUST H-12, Islamabad</li>
                     </ul>
                     <div class="footer-social">
@@ -25,9 +25,9 @@
                 <div class="footer-widget">
                     <h5>Information</h5>
                     <ul>
-                        <li><a href="index.php">About Us</a></li>
-                        <li><a href="contact.php">Contact</a></li>
-                        <li><a href="index.php">Privacy Policy</a></li>
+                        <li><a href="home">About Us</a></li>
+                        <li><a href="contact">Contact</a></li>
+                        <li><a href="home">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
@@ -38,21 +38,21 @@
                     <h5>Account</h5>
                     <ul>
                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
-                            echo "<li><a href='account.php?orders'>My Account</a></li>";
+                            echo "<li><a href='account?orders'>My Account</a></li>";
                         } ?>
                         <li><a href="
                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
-                            echo "shopping-cart.php";
+                            echo "shopping-cart";
                         } else {
-                            echo "login.php";
+                            echo "login";
                         }
                          ?>">Shopping Cart</a></li>
 
                         <li><a href="
                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
-                            echo "check-out.php";
+                            echo "check-out";
                         } else {
-                            echo "login.php";
+                            echo "login";
                         }
                          ?>
                         ">Check Out</a></li>
@@ -64,7 +64,7 @@
                 <div class="newslatter-item">
                     <h5>Keep in touch</h5>
                     <p>Get E-mail updates about our latest special offers.</p>
-                    <form action="index.php" class="subscribe-form">
+                    <form action="home" class="subscribe-form">
                         <input type="text" placeholder="Enter Your Mail">
                         <button type="button">Subscribe</button>
                     </form>

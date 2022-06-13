@@ -22,14 +22,14 @@
             <li class="list-group-item" <?php if (isset($_GET['orders'])) {
                                               echo  "style = 'background-color:#fe4231'";
                                             } ?>>
-                <a href="account.php?orders">
+                <a href="account?orders">
                     <i class="fa fa-list"></i> Pesanan Saya
                 </a>
             </li>
             <li class="list-group-item" <?php if (isset($_GET['details'])) {
                                                 echo  "style = 'background-color:#fe4231'";
                                             } ?>>
-                <a href="account.php?details">
+                <a href="account?details">
                     <i class="fa fa-bolt"></i> Profil Saya
                 </a>
             </li>

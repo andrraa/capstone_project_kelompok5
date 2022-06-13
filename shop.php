@@ -13,8 +13,8 @@ include("header.php");
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="breadcrumb-text">
-					<a href="index.php"><i class="fa fa-home"></i> Home</a>
-					<a href="shop.php">Shop</a>
+					<a href="index"><i class="fa fa-home"></i> Home</a>
+					<a href="shop">Shop</a>
 
 					<?php
 					if (isset($_GET['id_produk_kategori'])) {
@@ -95,12 +95,12 @@ include("header.php");
 										<div class='pi-pic' style='max-height:350px'>
 											<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 											<ul>
-												<li class='quick-view'><a href='product.php?id_produk=$id_produk' style='background:#fe4231;color:white'>View Details</a></li>
+												<li class='quick-view'><a href='product?id_produk=$id_produk' style='background:#fe4231;color:white'>View Details</a></li>
 											</ul>
 										</div>
 										<div class='pi-text'>
 											<div class='catagory-name'></div>
-											<a href='product.php?id_produk=$id_produk'>
+											<a href='product?id_produk=$id_produk'>
 												<h5>$judul_produk</h5>
 											</a>
 											<div class='product-price'>
@@ -135,7 +135,7 @@ include("header.php");
 									echo "
 						
 						<li class='page-item'>
-							<a class='page-link' href='shop.php?page=1'>
+							<a class='page-link' href='shop?page=1'>
 								First 
 							</a>
 						</li>
@@ -144,14 +144,14 @@ include("header.php");
 
 									for ($i = 2; $i < $total_pages; $i++) {
 										echo "
-							<li class='page-item'><a class='page-link' href='shop.php?page=" . $i . "'>" . $i . "</a></li>
+							<li class='page-item'><a class='page-link' href='shop?page=" . $i . "'>" . $i . "</a></li>
 							";
 									}
 
 									echo "
 						
 						<li class='page-item'>
-							<a class='page-link' href='shop.php?page=$total_pages'>
+							<a class='page-link' href='shop?page=$total_pages'>
 Last
 							</a>
 						</li>

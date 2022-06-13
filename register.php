@@ -14,7 +14,7 @@ include('header.php');
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="breadcrumb-text">
-					<a href="Index.php"><i class="fa fa-home"></i> Home</a>
+					<a href="Index"><i class="fa fa-home"></i> Home</a>
 					<span>Register</span>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ include('header.php');
 			<div class="col-lg-6 offset-lg-3">
 				<div class="register-form">
 					<h2>Register</h2>
-					<form action="register.php" method="post" enctype="multipart/form-data" id="logform">
+					<form action="register" method="post" enctype="multipart/form-data" id="logform">
 						<div class="group-input">
 							<label for="nama_pelanggan">Nama</label>
 							<input type="text" id="nama_pelanggan" name="nama_pelanggan" required>
@@ -63,7 +63,7 @@ include('header.php');
 						<button type="submit" class="site-btn register-btn" name="register">REGISTER</button>
 					</form>
 					<div class="switch-login">
-						<a href="login.php" class="or-login">atau Login</a>
+						<a href="login" class="or-login">atau Login</a>
 					</div>
 				</div>
 			</div>
@@ -170,13 +170,13 @@ if (isset($_POST['register'])) {
 
 		$_SESSION['new'] = $email_pelanggan;
 
-		echo "<script>window.open('check-out.php','_self')</script>";
+		echo "<script>window.open('check-out','_self')</script>";
 	} else {
 
 		$_SESSION['email_pelanggan'] = $email_pelanggan;
 
 		$_SESSION['new'] = $email_pelanggan;
-		echo "<script>window.open('index.php','_self')</script>";
+		echo "<script>window.open('index','_self')</script>";
 	}
 }
 

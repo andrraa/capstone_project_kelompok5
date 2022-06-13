@@ -15,8 +15,8 @@ include('header.php');
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text product-more">
-						<a href="index.php"><i class="fa fa-home"></i> Home</a>
-						<a href="shop.php">Shop</a>
+						<a href="index"><i class="fa fa-home"></i> Home</a>
+						<a href="shop">Shop</a>
 						<span>Details</span>
 					</div>
 				</div>
@@ -45,7 +45,7 @@ include('header.php');
 						getProd();
 						addCart();
 						?>
-						<form action='product.php?add_cart=<?php if (isset($_GET['id_produk'])) {
+						<form action='product?add_cart=<?php if (isset($_GET['id_produk'])) {
 																$id_produk = $_GET['id_produk'];
 																echo $id_produk;
 															} ?>' method='post'>
@@ -81,7 +81,7 @@ include('header.php');
 								<p id="msg"></p>
 							</div><!-- form-group Finish -->
 							<?php if ($_SESSION['email_pelanggan'] == 'unset') {
-								echo "<a href='login.php' class='btn primary-btn pd-cart' style='margin-top: 20px;'> Tambahkan ke Keranjang</a>";
+								echo "<a href='login' class='btn primary-btn pd-cart' style='margin-top: 20px;'> Tambahkan ke Keranjang</a>";
 							} else {
 								echo "<button class='btn primary-btn pd-cart' id='cartbtn' style='margin-top: 20px;'> Tambahkan ke Keranjang</button>";
 							}

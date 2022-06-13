@@ -14,8 +14,8 @@ include("header.php");
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="breadcrumb-text product-more">
-					<a href="index.php"><i class="fa fa-home"></i> Home</a>
-					<a href="shop.php">Shop</a>
+					<a href="home"><i class="fa fa-home"></i> Home</a>
+					<a href="shop">Shop</a>
 					<span>Check Out</span>
 				</div>
 			</div>
@@ -27,14 +27,14 @@ include("header.php");
 <!-- Shopping Cart Section Begin -->
 <section class="checkout-section spad">
 	<div class="container">
-		<form class="checkout-form" action="check-out.php" method="POST">
+		<form class="checkout-form" action="check-out" method="POST">
 			<div class="row">
 
 				<div class="col-lg-6" <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
 											echo "style = 'margin: 0 auto'";
 										} ?>>
 					<div class="checkout-content">
-						<a href="shop.php" class="content-btn">Lanjut belanja</a>
+						<a href="shop" class="content-btn">Lanjut belanja</a>
 					</div>
 					<div class="place-order">
 						<h4>Pesanan Anda</h4>
@@ -141,7 +141,7 @@ if (isset($_POST['jpengiriman'])) {
 					backdrop: true
 				});
 		</script>";
-	echo "<script>window.open('account.php?orders','_self')</script>";
+	echo "<script>window.open('account?orders','_self')</script>";
 }
 
 ?>

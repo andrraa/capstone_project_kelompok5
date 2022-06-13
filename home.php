@@ -34,7 +34,7 @@ include("header.php");
 							<h1>$heading_slider</h1>
 							<p>$text_slider
 							</p>
-							<a href='shop.php' class='primary-btn'>Shop Now</a>
+							<a href='shop' class='primary-btn'>Shop Now</a>
 						</div>
 					</div>
 					<div class='off-card'>
@@ -63,7 +63,7 @@ include("header.php");
 							<h1 style='color: white;'>$heading_slider</h1>
 							<p style='color: white;'>$text_slider
 							</p>
-							<a href='shop.php' class='primary-btn'>Shop Now</a>
+							<a href='shop' class='primary-btn'>Shop Now</a>
 						</div>
 					</div>
 				</div>
@@ -91,7 +91,7 @@ include("header.php");
 			$deskripsi_kategori = $row_slides['deskripsi_kategori'];
 			echo "
 			<div class='col-lg-4'>
-				<a href='shop.php?id_kategori=$id_kategori'>
+				<a href='shop?id_kategori=$id_kategori'>
 					<div class='single-banner'>
 						<img src='admin/image/gambar_kategori/$gambar_kategori' alt='$deskripsi_kategori'>
 						<div class='inner-text'>
@@ -115,7 +115,7 @@ include("header.php");
 			<div class="col-lg-3">
 				<div class="product-large set-bg" data-setbg="img/women-large.jpg">
 					<h2>Perempuan</h2>
-					<a href="shop.php?id_kategori=5">Temukan Lebih</a>
+					<a href="shop?id_kategori=5">Temukan Lebih</a>
 				</div>
 			</div>
 			<div class="col-lg-8 offset-lg-1">
@@ -152,7 +152,7 @@ include("header.php");
 			<div class="col-lg-3 offset-lg-1">
 				<div class="product-large set-bg m-large" data-setbg="img/men-large.jpg">
 					<h2>Laki-aki</h2>
-					<a href="shop.php?id_kategori=13">Temukan Lebih</a>
+					<a href="shop?id_kategori=13">Temukan Lebih</a>
 				</div>
 			</div>
 		</div>
@@ -162,7 +162,7 @@ include("header.php");
 <button class="open-button" onclick="openForm()">Customer Support</button>
 
 <div class="chat-popup" id="myForm">
-	<form action="/action_page.php" class="form-container">
+	<form action="/action_page" class="form-container">
 		<iframe
 			src="https://web.powerva.microsoft.com/environments/Default-d7b95ec4-9a7f-4260-b2e3-eb53f0ac8401/bots/new_bot_45b0df544b7b49ceb84bac87b2d23398/webchat"
 			frameborder="0" style="width: 100%; height: 100%;">

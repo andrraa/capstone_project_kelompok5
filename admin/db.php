@@ -1,3 +1,3 @@
 <?php
-$con = mysqli_connect("localhost","root", "", "db_kelompok5");
+$con = mysqli_connect("localhost","root", "", "contoh");
 ?>

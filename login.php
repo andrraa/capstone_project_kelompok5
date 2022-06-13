@@ -2,9 +2,9 @@
 
 $active = "Login";
 
-include("db.php");
-include("functions.php");
-include("header.php");
+include("db,php");
+include("functions,php");
+include("header,php");
 
 ?>
 
@@ -14,7 +14,7 @@ include("header.php");
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb-text">
-                    <a href="index.php"><i class="fa fa-home"></i> Home</a>
+                    <a href="index"><i class="fa fa-home"></i> Home</a>
                     <span>Login</span>
                 </div>
             </div>
@@ -30,7 +30,7 @@ include("header.php");
             <div class="col-lg-6 offset-lg-3">
                 <div class="login-form">
                     <h2>Login</h2>
-                    <form action="login.php" method="post">
+                    <form action="login" method="post">
                         <div class="group-input">
                             <label for="username">Email </label>
                             <input type="text" id="username" name="cemail" required>
@@ -45,7 +45,7 @@ include("header.php");
                         <button name="login" class="site-btn login-btn">Sign In</button>
                     </form>
                     <div class="switch-login">
-                        <a href="register.php" class="or-login">atau buat akun baru</a>
+                        <a href="register" class="or-login">atau buat akun baru</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@ include("header.php");
 <!-- Register Form Section End -->
 
 <?php
-include('footer.php');
+include('footer,php');
 ?>
 
 </body>
@@ -99,12 +99,12 @@ if (isset($_POST['login'])) {
 
         $_SESSION['email_pelanggan'] = $email_pelanggan;
 
-        echo  "<script>window.open('index.php?stat=1','_self')</script>";
+        echo  "<script>window.open('index?stat=1','_self')</script>";
     } else {
         $_SESSION['email_pelanggan'] = $email_pelanggan;
 
     
-        echo  "<script>window.open('check-out.php?','_self')</script>";
+        echo  "<script>window.open('check-out?','_self')</script>";
     }
 }
 

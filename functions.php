@@ -34,13 +34,13 @@ function addCart()
 		$run_check = mysqli_query($con, $check_product);
 
 		if (mysqli_num_rows($run_check) > 0) {
-			echo "<script>window.open('product.php?id_produk=$p_id&u=a','_self')</script>";
+			echo "<script>window.open('product?id_produk=$p_id&u=a','_self')</script>";
 		} else {
 
 			$query = "Insert into keranjang (id_produk, email_pelanggan,ukuran,jumlah,tanggal) values('$p_id','$email_pelanggan','$size','$qty',NOW())";
 			$run_query = mysqli_query($con, $query);
 
-			echo "<script>window.open('product.php?id_produk=$p_id','_self')</script>";
+			echo "<script>window.open('product?id_produk=$p_id','_self')</script>";
 		}
 	}
 }
@@ -72,11 +72,11 @@ function getWProduct()
 		<div class='pi-pic' style='max-height:300px'>
 			<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 			<ul>
-				<li class='quick-view'><a href='product.php?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
+				<li class='quick-view'><a href='product?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
 			</ul>
 		</div>
 		<div class='pi-text'>
-			<a href='product.php?id_produk=$id_produk'>
+			<a href='product?id_produk=$id_produk'>
 				<h5>$judul_produk</h5>
 			</a>
 			<div class='product-price'>
@@ -116,7 +116,7 @@ function getMProduct()
 		<div class='pi-pic' style='max-height:300px'>
 			<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 			<ul>
-				<li class='quick-view'><a href='product.php?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
+				<li class='quick-view'><a href='product?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
 			</ul>
 		</div>
 		<div class='pi-text'>
@@ -150,7 +150,7 @@ function getProdCat()
 
 		echo "
 
-		<li><a href='shop.php?id_produk_kategori=$id_produk_kategori'>$judul_produk_kategori</a></li>
+		<li><a href='shop?id_produk_kategori=$id_produk_kategori'>$judul_produk_kategori</a></li>
 
 		";
 	}
@@ -172,7 +172,7 @@ function getCat()
 
 		echo "
 
-		<li class='hovclass'><a href='shop.php?id_kategori=$id_kategori'>$judul_kategori</a></li>
+		<li class='hovclass'><a href='shop?id_kategori=$id_kategori'>$judul_kategori</a></li>
 
 		";
 	}
@@ -228,12 +228,12 @@ function getPcatProd()
 					<div class='pi-pic' style='max-height:350px'>
 						<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 						<ul>
-							<li class='quick-view'><a href='product.php?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
+							<li class='quick-view'><a href='product?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
 						</ul>
 					</div>
 					<div class='pi-text'>
 						<div class='catagory-name'></div>
-						<a href='product.php?id_produk=$id_produk'>
+						<a href='product?id_produk=$id_produk'>
 							<h5>$judul_produk</h5>
 						</a>
 						<div class='product-price'>
@@ -300,12 +300,12 @@ function getcatProd()
 					<div class='pi-pic' style='max-height:350px'>
 						<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 						<ul>
-							<li class='quick-view'><a href='product.php?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
+							<li class='quick-view'><a href='product?id_produk=$id_produk' style='background:#fe4231;color:white'>Lihat Detail</a></li>
 						</ul>
 					</div>
 					<div class='pi-text'>
 						<div class='catagory-name'></div>
-						<a href='product.php?id_produk=$id_produk'>
+						<a href='product?id_produk=$id_produk'>
 							<h5>$judul_produk</h5>
 						</a>
 						<div class='product-price'>
@@ -340,6 +340,7 @@ function getProd()
 		$get_image = "select * from gambar_produk where id_produk=$id_produk order by id_gambar_produk LIMIT 2";
 		$run_image = mysqli_query($con, $get_image);
 		$gambar_produks = array();
+		$gambar_produks[0]="";
 		$no=0;
 		while ($row_image = mysqli_fetch_array($run_image)) {
 
@@ -430,7 +431,7 @@ function relatedproduk()
 				<div class='pi-pic' style='max-height:300px'>
 					<img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk'>
 					<ul>
-						<li class='quick-view'><a href='product.php?id_produk=$p_id' style='background:#fe4231;color:white'>Lihat Detail</a></li>
+						<li class='quick-view'><a href='product?id_produk=$p_id' style='background:#fe4231;color:white'>Lihat Detail</a></li>
 					</ul>
 				</div>
 				<div class='pi-text'>
@@ -562,7 +563,7 @@ function cart_items()
 		<tr style='border-bottom: 0.5px solid #ebebeb'>
 		   <td class='cart-pic first-row'><img src='admin/image/gambar_produk/$gambar_produk' alt='$judul_produk' style='max-height:100px'></td>
 		   <td class='cart-title first-row'>
-			   <h5><a href='product.php?id_produk=$id_produk' style='color:black;font-weight:bold'>$judul_produk</h5>
+			   <h5><a href='product?id_produk=$id_produk' style='color:black;font-weight:bold'>$judul_produk</h5>
 		   </td>
 		   <td class='first-row'>$ukuran</td>
 		   <td class='p-price first-row'>Rp. $harga_produk</td>
@@ -574,7 +575,7 @@ function cart_items()
 			   </div>
 		   </td>
 		   <td class='total-price first-row'>Rp. $pro_total_p</td>
-		   <td class='close-td first-row'><a href='shopping-cart.php?del=$id_produk'><i class='ti-close' style='color:black'></i></a></td>
+		   <td class='close-td first-row'><a href='shopping-cart?del=$id_produk'><i class='ti-close' style='color:black'></i></a></td>
 	   </tr>    
    ";
 		}
@@ -632,7 +633,7 @@ function cart_icon_prod()
 			</div>
 		</td>
 		<td class='si-close'>
-		<a href='shopping-cart.php?delcart=$id_produk'> <i class='ti-close' style='color:black'></i></a>
+		<a href='shopping-cart?delcart=$id_produk'> <i class='ti-close' style='color:black'></i></a>
 		</td>
 	</tr>
 	";

@@ -51,7 +51,7 @@ include('db.php');
         <div class="inner-header">
             <div class="row">
                 <div class="col-md-3 logo">
-                    <a href="index.php">
+                    <a href="home">
                         <span>Fashops</span>
                     </a>
                 </div>
@@ -78,22 +78,22 @@ include('db.php');
 
 
                                             <?php if ($_SESSION['email_pelanggan'] == 'unset') {
-                                        echo "<a href='login.php' class='btn logbtn' style='width: 200px; height:40px'>Login</a>";
+                                        echo "<a href='login' class='btn logbtn' style='width: 200px; height:40px'>Login</a>";
                                     } else {
-                                        echo "<a href='logout.php' class='btn logbtn' style='width: 200px; height:40px'>Log Out</a>";
+                                        echo "<a href='logout' class='btn logbtn' style='width: 200px; height:40px'>Log Out</a>";
                                     } ?>
 
 
                                         </div>
                                         <?php if ($_SESSION['email_pelanggan'] == 'unset') {
                                     echo "<div class='insidelog'>
-                                    <span class='small'>or </span><a href='register.php' class='small'>Sign up Now</a>
+                                    <span class='small'>or </span><a href='register' class='small'>Sign up Now</a>
                                 </div>";
                                 } ?>
                                         <?php if (!($_SESSION['email_pelanggan'] == 'unset')) {
                                     echo "
                                 <div class='insidelog' style='border-top: solid 0.2px #e5e5e5;'>
-                                    <a href='account.php?orders' class='btn btn-dark' style='color:white;margin:4px 0'>My Account</a>
+                                    <a href='account?orders' class='btn btn-dark' style='color:white;margin:4px 0'>My Account</a>
                                 </div>";
                                 }
                                 ?>
@@ -109,7 +109,7 @@ include('db.php');
                                                                                 } ?>">
                     <ul class="nav-right">
                         <li class="cart-icon">
-                            <a href="shopping-cart.php">
+                            <a href="shopping-cart">
                                 <i class="icon_bag_alt"></i>
                                 <span><?php items(); ?></span>
                             </a>
@@ -126,8 +126,8 @@ include('db.php');
                                     <h5><?php total_price(); ?></h5>
                                 </div>
                                 <div class="select-button">
-                                    <a href="shopping-cart.php" class="primary-btn view-card">LIHAT SEMUA ITEM</a>
-                                    <a href="check-out.php" class="primary-btn checkout-btn">CHECK OUT</a>
+                                    <a href="shopping-cart" class="primary-btn view-card">LIHAT SEMUA ITEM</a>
+                                    <a href="check-out" class="primary-btn checkout-btn">CHECK OUT</a>
                                 </div>
                             </div>
                         </li>
@@ -157,9 +157,9 @@ include('db.php');
             </div>
             <nav class="nav-menu mobile-menu">
                 <ul>
-                    <li class="<?php if ($active == 'Home') echo "active" ?>"><a href="index.php">Home</a></li>
-                    <li class="<?php if ($active == 'Shop') echo "active" ?>"><a href="shop.php">Shop</a></li>
-                    <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact.php">Contact</a>
+                    <li class="<?php if ($active == 'Home') echo "active" ?>"><a href="home">Home</a></li>
+                    <li class="<?php if ($active == 'Shop') echo "active" ?>"><a href="shop">Shop</a></li>
+                    <li class="<?php if ($active == 'Contact') echo "active" ?>"><a href="contact">Contact</a>
                     </li>
 
                 </ul>
@@ -182,7 +182,7 @@ include('db.php');
 
         $run_query = mysqli_query($con, $query);
 
-        echo "<script>window.open('index.php','_self')</script>";
+        echo "<script>window.open('home','_self')</script>";
     }
 
     if (isset($_POST['submit'])) {
@@ -201,7 +201,7 @@ include('db.php');
 
             $products_id = $row_product['id_produk'];
 
-            echo "<script>window.open('product.php?id_produk=$products_id','_self')</script>";
+            echo "<script>window.open('product?id_produk=$products_id','_self')</script>";
         } else {
 
             echo "

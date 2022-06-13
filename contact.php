@@ -14,7 +14,7 @@ include("header.php");
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb-text">
-                    <a href="index.php"><i class="fa fa-home"></i> Home</a>
+                    <a href="home"><i class="fa fa-home"></i> Home</a>
                     <span>Contact</span>
                 </div>
             </div>
@@ -68,7 +68,7 @@ include("header.php");
                     <div class="leave-comment">
                         <h4>Leave A Message</h4>
                         <p>Our staff will call back later and answer your questions.</p>
-                        <form action="contact.php" class="comment-form">
+                        <form action="contact" class="comment-form">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <input type="text" placeholder="Your name" class="form-control" name="name"
