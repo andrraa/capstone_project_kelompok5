@@ -14,8 +14,8 @@ include('header.php');
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
-                    <a href="index.php"><i class="fa fa-home"></i> Home</a>
-                    <a href="shop.php">Shop</a>
+                    <a href="index.php"><i class="fa fa-home"></i> Beranda</a>
+                    <a href="shop.php">Toko</a>
                     <span>Keranjang belanja</span>
                 </div>
             </div>

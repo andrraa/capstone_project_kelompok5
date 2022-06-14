@@ -14,7 +14,7 @@ include('header.php');
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="breadcrumb-text">
-					<a href="Index.php"><i class="fa fa-home"></i> Home</a>
+					<a href="Index.php"><i class="fa fa-home"></i> Beranda</a>
 					<span>Daftar</span>
 				</div>
 			</div>
@@ -60,10 +60,10 @@ include('header.php');
 							<label for="con-pass">Foto</label>
 							<input type="file" name="foto_pelanggan" style="border: none; margin-top:6px;" required>
 						</div>
-						<button type="submit" class="site-btn register-btn" name="register">DAFTAR</button>
+						<button type="submit" class="site-btn register-btn" name="register">Daftar</button>
 					</form>
 					<div class="switch-login">
-						<a href="login.php" class="or-login">atau Login</a>
+						<a href="login.php" class="or-login">atau Masuk</a>
 					</div>
 				</div>
 			</div>

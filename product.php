@@ -15,9 +15,9 @@ include('header.php');
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text product-more">
-						<a href="index.php"><i class="fa fa-home"></i> Home</a>
-						<a href="shop.php">Shop</a>
-						<span>Details</span>
+						<a href="index.php"><i class="fa fa-home"></i> Beranda</a>
+						<a href="shop.php">Toko</a>
+						<span>Detail</span>
 					</div>
 				</div>
 			</div>
@@ -31,7 +31,7 @@ include('header.php');
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="filter-widget">
-						<h4 class="fw-title">Categories</h4>
+						<h4 class="fw-title">Kategori</h4>
 						<ul class="filter-catagories">
 							<?php
 							getCat();

@@ -25,7 +25,7 @@
                 <div class="footer-widget">
                     <h5>Informasi</h5>
                     <ul>
-                        <li><a href="index.php">Tentang Kita</a></li>
+                        <li><a href="index.php">Tentang Kami</a></li>
                         <li><a href="contact.php">Kontak</a></li>
                         <li><a href="index.php">Kebijakan Pribadi</a></li>
                     </ul>
@@ -62,11 +62,11 @@
             </div>
             <div class="col-lg-4">
                 <div class="newslatter-item">
-                    <h5>Keep in touch</h5>
-                    <p>Get E-mail updates about our latest special offers.</p>
+                    <h5>Tetap berhubungan</h5>
+                    <p>Dapatkan pembaruan E-mail tentang penawaran khusus terbaru kami.</p>
                     <form action="index.php" class="subscribe-form">
-                        <input type="text" placeholder="Enter Your Mail">
-                        <button type="button">Subscribe</button>
+                        <input type="text" placeholder="Masukkan Emailmu">
+                        <button type="button">Langganan</button>
                     </form>
                 </div>
             </div>
