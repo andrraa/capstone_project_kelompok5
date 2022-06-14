@@ -112,15 +112,6 @@ $("#logform").submit(function(event) {
 </html>
 
 <?php
-function getRans($length = 10) {
-	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	$charactersLength = strlen($characters);
-	$randomString = '';
-	for ($i = 0; $i < $length; $i++) {
-		$randomString .= $characters[rand(0, $charactersLength - 1)];
-	}
-	return $randomString;
-}
 
 if (isset($_POST['register'])) {
 
@@ -137,7 +128,7 @@ if (isset($_POST['register'])) {
 
 	$tardir = "admin/image/foto_pelanggan/";
 
-	$fileName = getRans(5).date("YmdHis").basename($_FILES['foto_pelanggan']['name']);
+	$fileName = basename($_FILES['foto_pelanggan']['name']);
 
 	$targetPath = $tardir . $fileName;
 	$fileType = pathinfo($targetPath, PATHINFO_EXTENSION);
@@ -146,10 +137,8 @@ if (isset($_POST['register'])) {
 
 
 	if (in_array($fileType, $allow)) {
-		if (move_uploaded_file($_FILES['foto_pelanggan']['tmp_name'], $targetPath)) {
 			$insert_c = "Insert into pelanggan (nama_pelanggan,email_pelanggan,password_pelanggan,alamat_pelanggan,jenis_kelamin_pelanggan,foto_pelanggan)
 			values('$nama_pelanggan','$email_pelanggan','$password_pelanggan','$alamat_pelanggan','$jenis_kelamin_pelanggan','$fileName')";
-		}
 	} else {
 		echo "<script>alert('Image not Inserted.')</script>";
 	}

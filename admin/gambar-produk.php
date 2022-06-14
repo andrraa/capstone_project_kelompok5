@@ -119,10 +119,10 @@ include('db.php');
         $previous = $halaman - 1;
         $next = $halaman + 1;
         if($produk==""){
-        $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where judul_produk like '%$cari%'");
+        $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where produk.judul_produk like '%$cari%'");
         }
         else{
-          $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where gambar_produk.id_produk=$produk and judul_produk like '%$cari%'");
+          $data = mysqli_query($con,"select * from gambar_produk join produk on gambar_produk.id_produk=produk.id_produk where gambar_produk.id_produk=$produk and produk.judul_produk like '%$cari%'");
         }
 
 
